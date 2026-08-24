@@ -16,6 +16,20 @@
   
   <!-- Favicon SVG -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='16 18 22 12 16 6'/><polyline points='8 6 2 12 8 18'/><circle cx='12' cy='12' r='2' fill='%2338bdf8'/></svg>">
+  
+  <!-- Estilos del Botón Interactivo de WhatsApp -->
+  <style>
+    .btn-whatsapp-text::after {
+      content: "Chatear";
+    }
+    .glow-btn-content:hover .btn-whatsapp-text {
+      font-size: 0;
+    }
+    .glow-btn-content:hover .btn-whatsapp-text::after {
+      content: "¡Chatea con nosotros!";
+      font-size: 0.875rem;
+    }
+  </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col selection:bg-sky-500 selection:text-white transition-colors duration-300 overflow-x-hidden">
 
@@ -53,24 +67,23 @@
         </div>
       </a>
 
-      <!-- Enlaces de Navegación -->
-<nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-600 dark:text-slate-300">
-  <a href="#proyectos" class="hover:text-sky-500 dark:hover:text-sky-400 transition-colors">Proyectos</a>
-  <a href="#sobre-mi" class="hover:text-sky-500 dark:hover:text-sky-400 transition-colors">Sobre Mí</a>
-  <a href="#habilidades" class="hover:text-sky-500 dark:hover:text-sky-400 transition-colors">Habilidades</a>
-  
-  <!-- Botón que activa el Modal de Correo -->
-  <button type="button" 
-          onclick="toggleContactoModal()" 
-          class="hover:text-sky-500 dark:hover:text-sky-400 transition-colors cursor-pointer">
-    Contacto-Correo
-  </button>
-</nav>
+      <!-- Enlaces de Navegación de Escritorio -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-600 dark:text-slate-300">
+        <a href="#proyectos" class="hover:text-sky-500 dark:hover:text-sky-400 transition-colors">Proyectos</a>
+        <a href="#sobre-mi" class="hover:text-sky-500 dark:hover:text-sky-400 transition-colors">Sobre Mí</a>
+        <a href="#habilidades" class="hover:text-sky-500 dark:hover:text-sky-400 transition-colors">Habilidades</a>
+        
+        <button type="button" 
+                onclick="toggleContactoModal()" 
+                class="hover:text-sky-500 dark:hover:text-sky-400 transition-colors cursor-pointer">
+          Contacto-Correo
+        </button>
+      </nav>
 
-      <!-- Botones de Acción (Tema + WhatsApp) -->
+      <!-- Botones de Acción (Tema + WhatsApp + Menú Móvil) -->
       <div class="flex items-center gap-3 shrink-0">
         
-        <!-- Conmutador Claro / Oscuro con Neón -->
+        <!-- Conmutador Claro / Oscuro -->
         <div class="glow-icon-container">
           <button id="themeToggle" type="button" aria-label="Cambiar tema" class="glow-icon-content bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 p-2.5 transition-colors cursor-pointer flex items-center justify-center">
             <svg id="themeSun" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg>
@@ -78,23 +91,58 @@
           </button>
         </div>
 
-<!-- Botón Hablemos a WhatsApp -->
-<div class="glow-btn-container">
-  <a href="https://wa.me/18093031738?text=Hola%20Domingo,%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20conversar%20contigo%20sobre%20un%20proyecto." 
-     target="_blank" 
-     rel="noopener noreferrer" 
-     aria-label="Contactar por WhatsApp" 
-     class="glow-btn-content bg-slate-900 hover:bg-slate-800 dark:bg-slate-950 dark:hover:bg-slate-900 text-white font-extrabold px-4 sm:px-5 py-2 text-xs sm:text-sm flex items-center gap-2 transition-transform hover:scale-105">
-    
-    <!-- Ícono SVG WhatsApp -->
-    <svg class="w-4 h-4 shrink-0" style="fill: #25D366;" viewBox="0 0 24 24">
-      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-    </svg>
-    <span>Chatea con nosotros</span>
-  </a>
-</div>
+        <!-- Botón Hablemos a WhatsApp con Popup Hover -->
+        <div class="glow-btn-container relative group">
+          
+          <!-- Popover emergente -->
+          <div class="absolute bottom-full mb-3 right-0 hidden group-hover:flex flex-col items-end whitespace-nowrap pointer-events-none transition-all duration-300 z-50">
+            <div class="bg-white text-slate-900 px-4 py-2.5 rounded-2xl shadow-2xl border border-slate-200 text-left">
+              <p class="text-[11px] font-medium text-slate-500 leading-tight">Para consultas inmediatas,</p>
+              <p class="text-sm font-extrabold text-slate-900 leading-tight mt-0.5">¡Chatea con nosotros!</p>
+            </div>
+            <span class="w-3 h-3 bg-white border-r border-b border-slate-200 rotate-45 -mt-1.5 mr-4"></span>
+          </div>
+
+          <!-- Enlace de WhatsApp -->
+          <a href="https://wa.me/18093031738?text=Hola%20Domingo,%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20conversar%20contigo%20sobre%20un%20proyecto." 
+             target="_blank" 
+             rel="noopener noreferrer" 
+             aria-label="Contactar por WhatsApp" 
+             class="glow-btn-content bg-slate-900 hover:bg-slate-800 dark:bg-slate-950 dark:hover:bg-slate-900 text-white font-extrabold px-4 py-2 text-xs sm:text-sm flex items-center gap-2 transition-all duration-200 hover:scale-105 whitespace-nowrap rounded-xl">
+            
+            <svg class="w-4 h-4 shrink-0" style="fill: #25D366;" viewBox="0 0 24 24">
+              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+            </svg>
+
+            <span class="btn-whatsapp-text"></span>
+          </a>
+        </div>
+
+        <!-- Botón del Menú Hamburguesa Móvil (A la derecha del botón WhatsApp) -->
+        <button id="btnMenuMovil" aria-label="Abrir menú de navegación" class="md:hidden p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:text-sky-500 dark:hover:text-sky-400 transition-colors cursor-pointer flex items-center justify-center">
+          <svg id="iconMenuOpen" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+          <svg id="iconMenuClose" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
 
       </div>
+    </div>
+
+    <!-- 3. MENÚ DESPLEGABLE MÓVIL (Tarjeta flotante compacta y centrada) -->
+    <div id="menuMovil" class="hidden md:hidden absolute top-full left-0 right-0 max-w-xs mx-auto mt-2 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200 dark:border-slate-800 shadow-xl rounded-2xl transition-all duration-300">
+      <ul class="flex flex-col items-center text-center gap-4 font-semibold text-slate-700 dark:text-slate-200 py-6 px-6">
+        <li><a href="#proyectos" class="link-menu block hover:text-sky-500 dark:hover:text-sky-400">Proyectos</a></li>
+        <li><a href="#habilidades" class="link-menu block hover:text-sky-500 dark:hover:text-sky-400">Habilidades</a></li>
+        <li><a href="#sobre-mi" class="link-menu block hover:text-sky-500 dark:hover:text-sky-400">Sobre mí</a></li>
+        <li class="w-full pt-1">
+          <button onclick="toggleContactoModal()" class="w-max mx-auto block bg-sky-500 hover:bg-sky-400 text-slate-950 px-5 py-2 rounded-xl font-bold transition-colors">
+            Contacto-Correo
+          </button>
+        </li>
+      </ul>
     </div>
   </header>
 
@@ -114,10 +162,6 @@
     
     <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base md:text-lg mt-4 sm:mt-6 max-w-2xl mx-auto leading-relaxed">
       <h3> <b>Sobre Mí</b></h3>Hola, soy Domingo Feliz (@dofepro). Desarrollo aplicaciones web modernas, landing pages optimizadas y soluciones a medida enfocadas en rendimiento y diseño.
-    </p>
-
-    <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base md:text-lg mt-4 sm:mt-6 max-w-2xl mx-auto leading-relaxed">
-      ><h2></h2>Mi objetivo es transformar necesidades complejas en productos digitales simples, intuitivos y de alto impacto visual. Entiendo el software como un puente entre la estrategia y la experiencia de usuario, por lo que cuido cada aspecto de la interfaz: desde una arquitectura limpia y rápida hasta microinteracciones que enriquecen la navegación.
     </p>
 
     <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base md:text-lg mt-4 sm:mt-6 max-w-2xl mx-auto leading-relaxed">
@@ -321,15 +365,11 @@
   </div>
 </div>
 
-  <!-- Contenedor dinámico de proyectos -->
-  <div id="gridProyectos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <!-- Se puebla desde script.js -->
-  </div>
-</section>
-
   <!-- SECCIÓN SOBRE MÍ / FILOSOFÍA CON NEÓN -->
   <section id="sobre-mi" class="py-16 sm:py-20 border-t border-slate-200 dark:border-slate-800/80 transition-colors">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Encabezado de la Sección -->
       <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
         <span class="text-sky-500 dark:text-sky-400 text-xs font-bold uppercase tracking-wider">Sobre Mí</span>
         <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Filosofía Profesional</h2>
@@ -338,81 +378,146 @@
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+      <!-- 1. Tarjetas de Misión y Visión (Grid de 1 col en móvil, 2 en pantallas medianas) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         
-        <!-- Misión con Neón -->
+        <!-- Misión -->
         <div class="glow-card-container">
-          <div class="glow-card-content bg-white dark:bg-slate-900 p-6 sm:p-8 transition-colors h-full flex flex-col">
-            <div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-500 dark:text-sky-400 flex items-center justify-center font-bold text-xl mb-6">
-              🎯
+          <div class="glow-card-content bg-white dark:bg-slate-900 p-5 sm:p-6 transition-colors h-full flex flex-col justify-center">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-xl bg-sky-500/10 text-sky-500 dark:text-sky-400 flex items-center justify-center font-bold text-lg shrink-0">
+                🎯
+              </div>
+              <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">Misión</h3>
             </div>
-            <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-3">Misión</h3>
             <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
               Diseñar y desarrollar soluciones digitales eficientes, accesibles y de alta calidad que resuelvan problemas reales para negocios y usuarios.
             </p>
           </div>
         </div>
 
-        <!-- Visión con Neón -->
+        <!-- Visión -->
         <div class="glow-card-container">
-          <div class="glow-card-content bg-white dark:bg-slate-900 p-6 sm:p-8 transition-colors h-full flex flex-col">
-            <div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-500 dark:text-sky-400 flex items-center justify-center font-bold text-xl mb-6">
-              🚀
+          <div class="glow-card-content bg-white dark:bg-slate-900 p-5 sm:p-6 transition-colors h-full flex flex-col justify-center">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-xl bg-sky-500/10 text-sky-500 dark:text-sky-400 flex items-center justify-center font-bold text-lg shrink-0">
+                🚀
+              </div>
+              <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">Visión</h3>
             </div>
-            <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-3">Visión</h3>
             <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
               Consolidarme como un desarrollador web integral de referencia, creando plataformas innovadoras y escalables con estándares modernos.
             </p>
           </div>
         </div>
 
-        <!-- Valores con Neón -->
-        <div class="glow-card-container">
-          <div class="glow-card-content bg-white dark:bg-slate-900 p-6 sm:p-8 transition-colors h-full flex flex-col">
-            <div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-500 dark:text-sky-400 flex items-center justify-center font-bold text-xl mb-6">
+      </div>
+
+      <!-- 2. Tarjeta de Valores (Distribución en Chips responsivos) -->
+      <div class="glow-card-container">
+        <div class="glow-card-content bg-white dark:bg-slate-900 p-5 sm:p-6 transition-colors">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-sky-500/10 text-sky-500 dark:text-sky-400 flex items-center justify-center font-bold text-lg shrink-0">
               💎
             </div>
-            <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-3">Valores</h3>
-            <ul class="space-y-2 text-slate-600 dark:text-slate-400 text-xs sm:text-sm">
-              <li><strong class="text-slate-800 dark:text-slate-200">Integridad:</strong> Transparencia y ética.</li>
-              <li><strong class="text-slate-800 dark:text-slate-200">Honestidad:</strong> Comunicación clara.</li>
-              <li><strong class="text-slate-800 dark:text-slate-200">Responsabilidad:</strong> Compromiso total.</li>
-              <li><strong class="text-slate-800 dark:text-slate-200">Solidaridad:</strong> Colaboración activa.</li>
-              <li><strong class="text-slate-800 dark:text-slate-200">Servicio:</strong> Orientación al cliente.</li>
-              <li><strong class="text-slate-800 dark:text-slate-200">Compromiso:</strong> Entrega con excelencia.</li>
-              <li><strong class="text-slate-800 dark:text-slate-200">Calidad:</strong> Código limpio y optimizado.</li>
-              <li><strong class="text-slate-800 dark:text-slate-200">Innovación:</strong> Aprendizaje continuo.</li>
-            </ul>
+            <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">Valores</h3>
           </div>
-        </div>
 
+          <!-- Grid Interno de Valores (Fondo oscuro con alta legibilidad) -->
+<div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+  
+  <div class="bg-slate-800/60 dark:bg-slate-800/80 border border-slate-700/50 rounded-xl p-3 flex flex-col justify-center text-center">
+    <span class="text-xs font-bold text-sky-400">Integridad</span>
+    <span class="text-[11px] text-slate-200 mt-0.5 font-medium">Transparencia y ética</span>
+  </div>
+
+  <div class="bg-slate-800/60 dark:bg-slate-800/80 border border-slate-700/50 rounded-xl p-3 flex flex-col justify-center text-center">
+    <span class="text-xs font-bold text-sky-400">Honestidad</span>
+    <span class="text-[11px] text-slate-200 mt-0.5 font-medium">Comunicación clara</span>
+  </div>
+
+  <div class="bg-slate-800/60 dark:bg-slate-800/80 border border-slate-700/50 rounded-xl p-3 flex flex-col justify-center text-center">
+    <span class="text-xs font-bold text-sky-400">Responsabilidad</span>
+    <span class="text-[11px] text-slate-200 mt-0.5 font-medium">Compromiso total</span>
+  </div>
+
+  <div class="bg-slate-800/60 dark:bg-slate-800/80 border border-slate-700/50 rounded-xl p-3 flex flex-col justify-center text-center">
+    <span class="text-xs font-bold text-sky-400">Solidaridad</span>
+    <span class="text-[11px] text-slate-200 mt-0.5 font-medium">Colaboración activa</span>
+  </div>
+
+  <div class="bg-slate-800/60 dark:bg-slate-800/80 border border-slate-700/50 rounded-xl p-3 flex flex-col justify-center text-center">
+    <span class="text-xs font-bold text-sky-400">Servicio</span>
+    <span class="text-[11px] text-slate-200 mt-0.5 font-medium">Orientación al cliente</span>
+  </div>
+
+  <div class="bg-slate-800/60 dark:bg-slate-800/80 border border-slate-700/50 rounded-xl p-3 flex flex-col justify-center text-center">
+    <span class="text-xs font-bold text-sky-400">Compromiso</span>
+    <span class="text-[11px] text-slate-200 mt-0.5 font-medium">Entrega con excelencia</span>
+  </div>
+
+  <div class="bg-slate-800/60 dark:bg-slate-800/80 border border-slate-700/50 rounded-xl p-3 flex flex-col justify-center text-center">
+    <span class="text-xs font-bold text-sky-400">Calidad</span>
+    <span class="text-[11px] text-slate-200 mt-0.5 font-medium">Código limpio y optimizado</span>
+  </div>
+
+  <div class="bg-slate-800/60 dark:bg-slate-800/80 border border-slate-700/50 rounded-xl p-3 flex flex-col justify-center text-center">
+    <span class="text-xs font-bold text-sky-400">Innovación</span>
+    <span class="text-[11px] text-slate-200 mt-0.5 font-medium">Aprendizaje continuo</span>
+  </div>
+
+</div>
+        </div>
       </div>
+
     </div>
   </section>
+    
+    <style>
+  /* Texto base para el botón CTA */
+  .btn-cta-text::after {
+    content: "Chatear";
+  }
+  
+  /* Cambio de texto al hacer hover */
+  .glow-btn-content:hover .btn-cta-text {
+    font-size: 0;
+  }
+  
+  .glow-btn-content:hover .btn-cta-text::after {
+    content: "Chatea con nosotros!";
+    font-size: 0.875rem; /* Ajustado al tamaño de texto del botón (text-sm) */
+  }
+</style>
 
-    
-    <!-- TARJETA CTA CON MARGEN INFERIOR Y MENSAJE DE WHATSAPP CORREGIDO -->
-<div class="glow-card-container mb-12 sm:mb-16">
-  <div class="glow-card-content bg-white dark:bg-slate-900 p-8 sm:p-12 text-center transition-colors">
-    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">¿Tienes un proyecto en mente?</h2>
-    <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-2 max-w-md mx-auto leading-relaxed">
-      Construyamos juntos la próxima solución para tu negocio.
-    </p>
-    
-    <div class="mt-6 flex justify-center">
-      <div class="glow-btn-container">
-        <a href="https://wa.me/18093031738?text=Hola%20Domingo,%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20conversar%20contigo%20sobre%20un%20proyecto." 
-           target="_blank" 
-           rel="noopener noreferrer" 
-           aria-label="Contactar por WhatsApp" 
-           class="glow-btn-content bg-sky-500 hover:bg-sky-400 text-slate-950 font-extrabold px-6 py-3 text-xs sm:text-sm flex items-center gap-2 transition-transform hover:scale-105 shadow-lg shadow-sky-500/20">
-          
-          <!-- Ícono SVG Oficial de WhatsApp -->
-          <svg class="w-4 h-4 shrink-0 fill-current" viewBox="0 0 24 24">
-            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-          </svg>
-          <span>WhatsApp</span>
-        </a>
+  <!-- TARJETA CTA CON MARGEN INFERIOR Y MENSAJE DE WHATSAPP DINÁMICO -->
+  <div class="glow-card-container mb-12 sm:mb-16">
+    <div class="glow-card-content bg-white dark:bg-slate-900 p-8 sm:p-12 text-center transition-colors">
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">¿Tienes un proyecto en mente?</h2>
+      <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-2 max-w-md mx-auto leading-relaxed">
+        Construyamos juntos la próxima solución para tu negocio.
+      </p>
+      
+      <div class="mt-6 flex justify-center">
+        <div class="glow-btn-container">
+          <a href="https://wa.me/18093031738?text=Hola%20Domingo,%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20conversar%20contigo%20sobre%20un%20proyecto." 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            aria-label="Contactar por WhatsApp" 
+            class="glow-btn-content bg-sky-500 hover:bg-sky-400 text-slate-950 font-extrabold px-6 py-3 text-xs sm:text-sm flex items-center gap-2 transition-all duration-200 hover:scale-105 shadow-lg shadow-sky-500/20 whitespace-nowrap">
+            
+            <!-- Ícono SVG Oficial de WhatsApp -->
+            <svg class="w-4 h-4 shrink-0 fill-current" viewBox="0 0 24 24">
+              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+            </svg>
+            
+            <!-- Contenedor del texto interactivo -->
+            <span class="btn-cta-text"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
       </div>
     </div>
   </div>

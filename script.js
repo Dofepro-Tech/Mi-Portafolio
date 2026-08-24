@@ -22,25 +22,6 @@ const misProyectos = [
   }
 ];
 
-// Inicialización de funciones al cargar el DOM
-document.addEventListener('DOMContentLoaded', () => {
-  inicializarTema();
-  renderizarProyectos(misProyectos);
-  actualizarContadorProyectos();
-  inicializarFiltros();
-  inicializarScrollTop();
-  inicializarParticulas();
-  inicializarFormularioContacto();
-});
-
-// Actualiza el contador de proyectos
-function actualizarContadorProyectos() {
-  const contadorElemento = document.getElementById('contador-proyectos');
-  if (contadorElemento) {
-    contadorElemento.textContent = `+${misProyectos.length}`;
-  }
-}
-
 // 1. GESTIÓN DEL MODO CLARO / OSCURO
 function inicializarTema() {
   const btnTheme = document.getElementById('themeToggle');
@@ -51,8 +32,13 @@ function inicializarTema() {
 
   const aplicarIconos = (isDark) => {
     if (iconSun && iconMoon) {
-      iconSun.classList.toggle('hidden', !isDark);
-      iconMoon.classList.toggle('hidden', isDark);
+      if (isDark) {
+        iconSun.classList.remove('hidden');
+        iconMoon.classList.add('hidden');
+      } else {
+        iconSun.classList.add('hidden');
+        iconMoon.classList.remove('hidden');
+      }
     }
   };
 
@@ -67,11 +53,21 @@ function inicializarTema() {
     aplicarIconos(false);
   }
 
-  btnTheme.addEventListener('click', () => {
+  // Evento Clic
+  btnTheme.onclick = (e) => {
+    e.preventDefault();
     const isDark = document.documentElement.classList.toggle('dark');
-    aplicarIconos(isDark);
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  });
+    aplicarIconos(isDark);
+  };
+}
+
+// Actualiza el contador de proyectos
+function actualizarContadorProyectos() {
+  const contadorElemento = document.getElementById('contador-proyectos');
+  if (contadorElemento) {
+    contadorElemento.textContent = `+${misProyectos.length}`;
+  }
 }
 
 // RENDERIZADO DE TARJETAS DE PROYECTOS
@@ -91,7 +87,7 @@ function renderizarProyectos(lista) {
     card.className = "glow-card-container group";
     
     card.innerHTML = `
-      <div class="glow-card-content bg-white dark:bg-slate-900 p-6 flex flex-col justify-between transition-colors shadow-lg dark:shadow-none">
+      <div class="glow-card-content bg-white dark:bg-slate-900 p-6 flex flex-col justify-between transition-colors shadow-lg dark:shadow-none rounded-2xl border border-slate-200 dark:border-slate-800">
         <div>
           <div class="flex items-center justify-between mb-4">
             <span class="text-3xl p-2.5 bg-slate-100 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700/50 group-hover:scale-110 transition-transform" aria-hidden="true">${p.icono}</span>
@@ -152,9 +148,11 @@ function inicializarScrollTop() {
 
   const evaluarScroll = () => {
     if (window.scrollY > 100) {
-      btnScrollTop.classList.add('show-btn');
+      btnScrollTop.classList.add('opacity-100', 'pointer-events-auto');
+      btnScrollTop.classList.remove('opacity-0', 'pointer-events-none');
     } else {
-      btnScrollTop.classList.remove('show-btn');
+      btnScrollTop.classList.add('opacity-0', 'pointer-events-none');
+      btnScrollTop.classList.remove('opacity-100', 'pointer-events-auto');
     }
   };
 
@@ -257,7 +255,7 @@ function inicializarFormularioContacto() {
       }
     } catch (error) {
       console.error('Error al conectar con la API:', error);
-      alert('No se pudo conectar con el servidor backend. Asegúrate de ejecutar "node server/server.js".');
+      alert('No se pudo conectar con el servidor backend.');
     } finally {
       btnSubmit.innerHTML = textoOriginal;
       btnSubmit.disabled = false;
@@ -289,7 +287,53 @@ function toggleContactoModal() {
   }
 }
 
-// EVENTOS DE CIERRE DEL MODAL
+// CONTROL DEL MENÚ HAMBURGUESA MÓVIL
+function inicializarMenuMovil() {
+  const btnMenuMovil = document.getElementById('btnMenuMovil');
+  const menuMovil = document.getElementById('menuMovil');
+  const iconMenuOpen = document.getElementById('iconMenuOpen');
+  const iconMenuClose = document.getElementById('iconMenuClose');
+
+  if (!btnMenuMovil || !menuMovil) return;
+
+  const toggleMenu = () => {
+    const isHidden = menuMovil.classList.toggle('hidden');
+    
+    if (iconMenuOpen && iconMenuClose) {
+      iconMenuOpen.classList.toggle('hidden', !isHidden);
+      iconMenuClose.classList.toggle('hidden', isHidden);
+    }
+  };
+
+  btnMenuMovil.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleMenu();
+  });
+
+  document.addEventListener('click', (e) => {
+    const isMenuOpen = !menuMovil.classList.contains('hidden');
+    if (isMenuOpen && !menuMovil.contains(e.target) && !btnMenuMovil.contains(e.target)) {
+      toggleMenu();
+    }
+  });
+
+  const elementosMenu = menuMovil.querySelectorAll('a, button');
+  elementosMenu.forEach(item => {
+    item.addEventListener('click', () => {
+      if (!menuMovil.classList.contains('hidden')) {
+        toggleMenu();
+      }
+    });
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 768 && !menuMovil.classList.contains('hidden')) {
+      toggleMenu();
+    }
+  });
+}
+
+// EVENTOS GLOBALES DE CIERRE DEL MODAL
 document.getElementById('modalContacto')?.addEventListener('click', (e) => {
   if (e.target === e.currentTarget) {
     toggleContactoModal();
@@ -303,4 +347,16 @@ document.addEventListener('keydown', (e) => {
       toggleContactoModal();
     }
   }
+});
+
+// PUNTO DE ENTRADA ÚNICO
+document.addEventListener('DOMContentLoaded', () => {
+  inicializarTema();
+  renderizarProyectos(misProyectos);
+  actualizarContadorProyectos();
+  inicializarFiltros();
+  inicializarScrollTop();
+  inicializarParticulas();
+  inicializarFormularioContacto();
+  inicializarMenuMovil();
 });
