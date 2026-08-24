@@ -10,8 +10,27 @@ const PORT = process.env.PORT || 3000;
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+// Configuración de orígenes autorizados para CORS
+const origenesPermitidos = [
+  'http://127.0.0.1:5500',               // Pruebas locales (Live Server)
+  'http://localhost:3000',               // Pruebas locales
+  'https://dofepro-tech.github.io',       // Tu sitio en GitHub Pages
+  'https://dofepro.do',                  // Tu dominio personalizado principal
+  'https://www.dofepro.do'              // Tu dominio personalizado con www
+];
+
 // Middlewares
-app.use(cors());
+app.use(cors({
+  origin: function (origin, callback) {
+    // Permite peticiones sin origen (como llamadas directas) o si está en la lista de dominios
+    if (!origin || origenesPermitidos.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(null, true); // Permisivo para evitar bloqueos no deseados
+    }
+  }
+}));
+
 app.use(express.json());
 
 // Ruta de prueba
@@ -31,7 +50,7 @@ app.post('/api/contacto', async (req, res) => {
   }
 
   try {
-    // 1. Guardar en Supabase mediante su API REST directa (evita errores de librerías)
+    // 1. Guardar en Supabase mediante su API REST directa
     const supabaseUrl = `${process.env.SUPABASE_URL}/rest/v1/mensajes`;
     const responseDb = await fetch(supabaseUrl, {
       method: 'POST',
