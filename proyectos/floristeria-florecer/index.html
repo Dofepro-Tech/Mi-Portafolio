@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Florecer | Arreglos Florales & Diseño Floral a Medida</title>
+  <meta name="description" content="Floristería artesanal. Diseñamos arreglos florales únicos para bodas, eventos y entregas a domicilio.">
+  <meta name="robots" content="index, follow">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' }
+  </script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-stone-50 dark:bg-slate-950 text-stone-800 dark:text-stone-100 font-sans antialiased transition-colors duration-300">
+
+  <!-- Enlace de salto para accesibilidad (WCAG) -->
+  <a href="#contenido-principal" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:bg-sky-500 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:z-50">
+    Saltar al contenido principal
+  </a>
+
+  <!-- ENCABEZADO Y NAVEGACIÓN -->
+  <header class="sticky top-0 z-40 bg-stone-50/90 dark:bg-slate-950/90 backdrop-blur-md">
+    <div class="max-w-6xl mx-auto px-4 h-20 flex items-center justify-between">
+      <a href="#inicio" class="text-2xl font-serif font-bold text-emerald-800 dark:text-emerald-400 flex items-center gap-2">
+        <span>🌸</span> Florecer
+      </a>
+      
+      <div class="flex items-center gap-4">
+        <nav aria-label="Navegación principal" class="hidden md:block">
+          <ul class="flex items-center gap-6 text-sm font-medium text-stone-600 dark:text-stone-300">
+            <li><a href="#inicio" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors">Inicio</a></li>
+            <li><a href="#galeria" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors">Catálogo</a></li>
+            <li><a href="#testimonios" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors">Opiniones</a></li>
+            <li><a href="#contacto" class="bg-emerald-800 hover:bg-emerald-700 text-white px-4 py-2 rounded-full transition-all">Pedir Ahora</a></li>
+          </ul>
+        </nav>
+
+        <!-- Botón Volver al Portafolio (Hover verde) -->
+        <a href="../../index.html" class="inline-flex items-center gap-2 border border-stone-600 dark:border-slate-700 bg-stone-900/80 hover:bg-emerald-800 hover:border-emerald-700 text-stone-200 px-4 py-2 rounded-full text-sm font-medium transition-all shadow-sm">
+          <span>&larr;</span> Ver Portafolio
+        </a>
+
+        <!-- Botón de Cambio de Tema -->
+        <button id="themeToggle" aria-label="Cambiar tema" class="p-2.5 rounded-full bg-stone-200 dark:bg-slate-800 text-stone-700 dark:text-stone-200 hover:opacity-80 transition-all">
+          <span id="themeIcon">🌙</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido-principal">
+    <!-- HERO SECTION -->
+    <section id="inicio" class="py-20 md:py-28 px-4 max-w-5xl mx-auto text-center">
+      <span class="inline-block bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 px-4 py-1.5 rounded-full text-xs font-semibold uppercase mb-6">
+        Floristería Artesanal & Envíos
+      </span>
+      <h1 class="text-4xl sm:text-6xl font-serif font-bold text-stone-900 dark:text-white mb-6 leading-tight">
+        Flores frescas que cuentan <span class="italic text-emerald-800 dark:text-emerald-400">historias inolvidables</span>
+      </h1>
+      <p class="text-stone-600 dark:text-stone-300 text-lg sm:text-xl max-w-2xl mx-auto mb-10">
+        Diseños florales hechos a mano para eventos, regalos y sorpresas especiales. Creamos experiencias botánicas únicas.
+      </p>
+      <div class="flex justify-center">
+        <a href="#contacto" class="bg-emerald-800 hover:bg-emerald-700 text-white font-semibold px-8 py-3.5 rounded-full transition-all shadow-md">
+          Hacer Pedido
+        </a>
+      </div>
+    </section>
+
+    <!-- GALERÍA DE TARJETAS FLORALES -->
+    <section id="galeria" class="py-16 bg-stone-100/60 dark:bg-slate-900/40 border-y border-stone-200 dark:border-slate-800">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <h2 class="text-3xl font-serif font-bold text-stone-900 dark:text-white mb-3">Colecciones & Diseños Florales</h2>
+          <p class="text-stone-600 dark:text-stone-300 text-sm">Explora nuestro catálogo con flores frescas seleccionadas diariamente.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Tarjeta 1 -->
+          <article class="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-stone-200 dark:border-slate-800 shadow-sm hover:shadow-lg transition-shadow">
+            <img src="https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=800&q=80" alt="Ramo de rosas y peonías frescas" class="w-full h-64 object-cover">
+            <div class="p-6">
+              <h3 class="text-xl font-serif font-bold mb-2">Bodas & Aniversarios</h3>
+              <p class="text-stone-600 dark:text-stone-300 text-sm mb-4">Centros de mesa, arcos florales y ramos personalizados con flores importadas.</p>
+              <span class="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">Diseño Exclusivo</span>
+            </div>
+          </article>
+
+          <!-- Tarjeta 2 -->
+          <article class="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-stone-200 dark:border-slate-800 shadow-sm hover:shadow-lg transition-shadow">
+            <img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=800&q=80" alt="Arreglo de tulipanes primaverales" class="w-full h-64 object-cover">
+            <div class="p-6">
+              <h3 class="text-xl font-serif font-bold mb-2">Colección Primaveral</h3>
+              <p class="text-stone-600 dark:text-stone-300 text-sm mb-4">Combinación de tulipanes, peonías y eucalipto silvestre ideal para regalos.</p>
+              <span class="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">Edición Limitada</span>
+            </div>
+          </article>
+
+          <!-- Tarjeta 3 -->
+          <article class="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-stone-200 dark:border-slate-800 shadow-sm hover:shadow-lg transition-shadow">
+            <img src="https://images.unsplash.com/photo-1487070183336-b863922373d4?auto=format&fit=crop&w=800&q=80" alt="Decoración con orquídeas corporativas" class="w-full h-64 object-cover">
+            <div class="p-6">
+              <h3 class="text-xl font-serif font-bold mb-2">Decoración Corporativa</h3>
+              <p class="text-stone-600 dark:text-stone-300 text-sm mb-4">Ambientación constante de oficinas, hoteles y restaurantes con flores duraderas.</p>
+              <span class="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">Suscripción</span>
+            </div>
+          </article>
+
+          <!-- Tarjeta 4 -->
+          <article class="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-stone-200 dark:border-slate-800 shadow-sm hover:shadow-lg transition-shadow">
+            <img src="https://images.unsplash.com/photo-1508615070457-7baeba4003ab?auto=format&fit=crop&w=800&q=80" alt="Ramo de girasoles y silvestres" class="w-full h-64 object-cover">
+            <div class="p-6">
+              <h3 class="text-xl font-serif font-bold mb-2">Ramo de Girasoles Silvestres</h3>
+              <p class="text-stone-600 dark:text-stone-300 text-sm mb-4">Luz y frescura natural combinadas con margaritas y espigas rústicas.</p>
+              <span class="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">Popular</span>
+            </div>
+          </article>
+
+          <!-- Tarjeta 5 -->
+          <article class="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-stone-200 dark:border-slate-800 shadow-sm hover:shadow-lg transition-shadow">
+            <img src="https://images.unsplash.com/photo-1563241527-3004b7be0ffd?auto=format&fit=crop&w=800&q=80" alt="Orquídeas finas en base de cerámica" class="w-full h-64 object-cover">
+            <div class="p-6">
+              <h3 class="text-xl font-serif font-bold mb-2">Orquídeas Premium</h3>
+              <p class="text-stone-600 dark:text-stone-300 text-sm mb-4">Plantas de orquídeas Phalaenopsis presentadas en macetas de cerámica artesanal.</p>
+              <span class="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">Elegancia</span>
+            </div>
+          </article>
+
+          <!-- Tarjeta 6 -->
+          <article class="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-stone-200 dark:border-slate-800 shadow-sm hover:shadow-lg transition-shadow">
+            <img src="https://images.unsplash.com/photo-1527061011665-3652c757a4d4?auto=format&fit=crop&w=800&q=80" alt="Caja de rosas rojas de lujo" class="w-full h-64 object-cover">
+            <div class="p-6">
+              <h3 class="text-xl font-serif font-bold mb-2">Caja de Rosas Luxury</h3>
+              <p class="text-stone-600 dark:text-stone-300 text-sm mb-4">Selección de rosas rojas de tallo largo presentadas en caja cilíndrica de lujo.</p>
+              <span class="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">Regalo Especial</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN COMENTARIOS / TESTIMONIOS -->
+    <section id="testimonios" class="py-20 max-w-6xl mx-auto px-4">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 class="text-3xl font-serif font-bold text-stone-900 dark:text-white mb-3">Lo que dicen nuestros clientes</h2>
+        <p class="text-stone-600 dark:text-stone-300 text-sm">Opiniones de quienes han confiado en nuestro trabajo.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <blockquote class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-stone-200 dark:border-slate-800 shadow-sm">
+          <p class="text-stone-600 dark:text-stone-300 text-sm italic mb-4">"El arreglo para nuestra boda superó todas las expectativas. Las flores llegaron fresquísimas y el diseño fue exactamente lo que queríamos."</p>
+          <footer class="font-bold text-stone-900 dark:text-white text-sm">— María Fernández, Boda en Jardín</footer>
+        </blockquote>
+
+        <blockquote class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-stone-200 dark:border-slate-800 shadow-sm">
+          <p class="text-stone-600 dark:text-stone-300 text-sm italic mb-4">"La suscripción mensual para la recepción de la oficina siempre llama la atención de los clientes. Excelente atención y puntualidad."</p>
+          <footer class="font-bold text-stone-900 dark:text-white text-sm">— Carlos Rivas, Director Creativo</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- FORMULARIO DE CONTACTO Y PEDIDOS -->
+    <section id="contacto" class="py-20 max-w-3xl mx-auto px-4">
+      <div class="bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-800 rounded-3xl p-8 sm:p-12 shadow-lg">
+        <div class="text-center mb-10">
+          <h2 class="text-3xl font-serif font-bold text-stone-900 dark:text-white mb-3">Haz tu Pedido o Consulta</h2>
+          <p class="text-stone-600 dark:text-stone-300 text-sm">Selecciona la opción que deseas y completa el formulario.</p>
+        </div>
+
+        <div id="formAlert" class="hidden mb-6 p-4 rounded-xl text-sm font-medium"></div>
+
+        <form id="contactForm" action="https://formspree.io/f/placeholder" method="POST" class="space-y-6" novalidate>
+          <div>
+            <label for="nombre" class="block text-sm font-medium mb-2">Nombre completo *</label>
+            <input type="text" id="nombre" name="nombre" required placeholder="Ej. Ana Gómez" class="w-full rounded-xl border border-stone-300 dark:border-slate-700 bg-transparent px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600">
+            <span id="nombre-error" class="form-error text-red-500 text-xs mt-1 block"></span>
+          </div>
+
+          <div>
+            <label for="email" class="block text-sm font-medium mb-2">Correo electrónico *</label>
+            <input type="email" id="email" name="email" required placeholder="tu@correo.com" class="w-full rounded-xl border border-stone-300 dark:border-slate-700 bg-transparent px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600">
+            <span id="email-error" class="form-error text-red-500 text-xs mt-1 block"></span>
+          </div>
+
+          <div>
+            <label for="opcion" class="block text-sm font-medium mb-2">¿Qué producto o servicio deseas pedir? *</label>
+            <select id="opcion" name="opcion" required class="w-full rounded-xl border border-stone-300 dark:border-slate-700 bg-stone-50 dark:bg-slate-900 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600">
+              <option value="" disabled selected>Selecciona una opción...</option>
+              <option value="bodas">Bodas & Aniversarios</option>
+              <option value="primavera">Colección Primaveral</option>
+              <option value="corporativo">Decoración Corporativa</option>
+              <option value="girasoles">Ramo de Girasoles Silvestres</option>
+              <option value="orquideas">Orquídeas Premium</option>
+              <option value="rosas_luxury">Caja de Rosas Luxury</option>
+              <option value="personalizado">Diseño Floral Personalizado</option>
+            </select>
+            <span id="opcion-error" class="form-error text-red-500 text-xs mt-1 block"></span>
+          </div>
+
+          <div>
+            <label for="mensaje" class="block text-sm font-medium mb-2">Detalles del mensaje / Fecha de entrega *</label>
+            <textarea id="mensaje" name="mensaje" rows="4" required placeholder="Indica la fecha de entrega, colores o detalles especiales..." class="w-full rounded-xl border border-stone-300 dark:border-slate-700 bg-transparent px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600"></textarea>
+            <span id="mensaje-error" class="form-error text-red-500 text-xs mt-1 block"></span>
+          </div>
+
+          <button type="submit" id="btnSubmit" class="w-full bg-emerald-800 hover:bg-emerald-700 text-white font-bold py-4 rounded-xl transition-all shadow-md flex justify-center items-center gap-2">
+            <span id="btnText">Enviar Pedido</span>
+            <span id="btnSpinner" class="hidden">⏳</span>
+          </button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- BOTÓN IR ARRIBA -->
+  <button id="scrollTopBtn" aria-label="Ir arriba" class="fixed bottom-6 right-6 hidden w-12 h-12 bg-sky-500 hover:bg-sky-400 text-black rounded-full shadow-lg transition-all z-50 items-center justify-center">
+    <svg class="w-6 h-6 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+    </svg>
+  </button>
+
+  <!-- FOOTER -->
+  <footer class="py-8 border-t border-stone-200 dark:border-slate-800 text-center text-stone-500 dark:text-stone-400 text-sm bg-stone-100 dark:bg-slate-950">
+    <p>&copy; 2026 Domingo Feliz (@dofepro). Todos los derechos reservados.</p>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

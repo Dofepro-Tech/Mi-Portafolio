@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@layer components {
+  /* Estilos adaptables con Tailwind */
+  .form-input {
+    @apply w-full bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 
+           rounded-xl px-4 py-3 text-stone-900 dark:text-stone-100 placeholder-stone-400 
+           focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 transition-all;
+  }
+
+  .form-error {
+    @apply text-red-500 text-xs mt-1 block min-h-[1rem];
+  }
+
+  /* Estados dinámicos de validación */
+  .input-invalid {
+    @apply border-red-500 ring-2 ring-red-500/20 !important;
+  }
+
+  .input-valid {
+    @apply border-emerald-600 ring-2 ring-emerald-600/20 !important;
+  }
+}

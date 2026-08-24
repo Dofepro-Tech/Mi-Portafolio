@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portafolio | Domingo Feliz (@dofepro)</title>
+  
+  <!-- CSS Compilado de Tailwind & Estilos Personalizados -->
+  <link href="./dist/output.css" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Favicon SVG -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='16 18 22 12 16 6'/><polyline points='8 6 2 12 8 18'/><circle cx='12' cy='12' r='2' fill='%2338bdf8'/></svg>">
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col selection:bg-sky-500 selection:text-white transition-colors duration-300 overflow-x-hidden">
+
+  <!-- CANVAS DE PARTÍCULAS EN EL FONDO -->
+  <canvas id="particlesCanvas" class="fixed inset-0 pointer-events-none -z-10 opacity-30 dark:opacity-50"></canvas>
+
+  <!-- HEADER UNIFICADO (BANNER + NAVEGACIÓN) -->
+  <header class="sticky top-0 z-50 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md shadow-md w-full transition-colors duration-300">
+    
+    <!-- 1. TOP BANNER -->
+    <div class="bg-slate-100 dark:bg-slate-900 py-2 w-full text-center transition-colors px-4 border-b border-slate-200/50 dark:border-slate-800/50">
+      <p class="text-amber-600 dark:text-amber-400 text-xs font-extrabold tracking-widest uppercase">
+        JEHOVÁ JIREH — 22:14 — Dios Proveerá
+      </p>
+    </div>
+
+    <!-- 2. BARRA DE NAVEGACIÓN PRINCIPAL -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Logo Propio con Neón -->
+      <a href="#" class="flex items-center gap-3 shrink-0 group">
+        <div class="glow-icon-container">
+          <div class="glow-icon-content bg-slate-100 dark:bg-slate-900 p-2 flex items-center justify-center">
+            <svg class="w-5 h-5 text-sky-500 dark:text-sky-400 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="16 18 22 12 16 6"></polyline>
+              <polyline points="8 6 2 12 8 18"></polyline>
+              <circle cx="12" cy="12" r="2" fill="currentColor"></circle>
+            </svg>
+          </div>
+        </div>
+
+        <div class="flex flex-col justify-center">
+          <span class="font-extrabold text-base sm:text-lg text-slate-900 dark:text-white leading-tight">Dofepro<span class="text-sky-500 dark:text-sky-400">Tech</span></span>
+          <span class="text-[9px] uppercase font-bold tracking-widest text-slate-500 dark:text-slate-400">@dofepro • Soluciones Web</span>
+        </div>
+      </a>
+
+      <!-- Enlaces de Navegación -->
+<nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-600 dark:text-slate-300">
+  <a href="#proyectos" class="hover:text-sky-500 dark:hover:text-sky-400 transition-colors">Proyectos</a>
+  <a href="#sobre-mi" class="hover:text-sky-500 dark:hover:text-sky-400 transition-colors">Sobre Mí</a>
+  <a href="#habilidades" class="hover:text-sky-500 dark:hover:text-sky-400 transition-colors">Habilidades</a>
+  
+  <!-- Botón que activa el Modal de Correo -->
+  <button type="button" 
+          onclick="toggleContactoModal()" 
+          class="hover:text-sky-500 dark:hover:text-sky-400 transition-colors cursor-pointer">
+    Contacto-Correo
+  </button>
+</nav>
+
+      <!-- Botones de Acción (Tema + WhatsApp) -->
+      <div class="flex items-center gap-3 shrink-0">
+        
+        <!-- Conmutador Claro / Oscuro con Neón -->
+        <div class="glow-icon-container">
+          <button id="themeToggle" type="button" aria-label="Cambiar tema" class="glow-icon-content bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 p-2.5 transition-colors cursor-pointer flex items-center justify-center">
+            <svg id="themeSun" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg>
+            <svg id="themeMoon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path></svg>
+          </button>
+        </div>
+
+<!-- Botón Hablemos a WhatsApp -->
+<div class="glow-btn-container">
+  <a href="https://wa.me/18093031738?text=Hola%20Domingo,%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20conversar%20contigo%20sobre%20un%20proyecto." 
+     target="_blank" 
+     rel="noopener noreferrer" 
+     aria-label="Contactar por WhatsApp" 
+     class="glow-btn-content bg-slate-900 hover:bg-slate-800 dark:bg-slate-950 dark:hover:bg-slate-900 text-white font-extrabold px-4 sm:px-5 py-2 text-xs sm:text-sm flex items-center gap-2 transition-transform hover:scale-105">
+    
+    <!-- Ícono SVG WhatsApp -->
+    <svg class="w-4 h-4 shrink-0" style="fill: #25D366;" viewBox="0 0 24 24">
+      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+    </svg>
+    <span>Chatear</span>
+  </a>
+</div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="relative py-16 sm:py-24 md:py-32 px-4 max-w-5xl mx-auto text-center overflow-visible">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 sm:w-96 sm:h-96 bg-sky-500/20 dark:bg-sky-500/30 rounded-full blur-[90px] sm:blur-[100px] pointer-events-none -z-10"></div>
+    <div class="absolute top-1/3 right-4 w-48 h-48 sm:w-60 sm:h-60 bg-purple-500/15 dark:bg-purple-500/25 rounded-full blur-[80px] sm:blur-[90px] pointer-events-none -z-10"></div>
+
+    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-semibold mb-6 shadow-xs">
+      <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+      Disponible para nuevos proyectos
+    </div>
+    
+    <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
+  Transformando ideas en <span class="texto-gradiente">experiencias digitales</span>
+</h1>
+    
+    <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base md:text-lg mt-4 sm:mt-6 max-w-2xl mx-auto leading-relaxed">
+      <h3> <b>Sobre Mí</b></h3>Hola, soy Domingo Feliz (@dofepro). Desarrollo aplicaciones web modernas, landing pages optimizadas y soluciones a medida enfocadas en rendimiento y diseño.
+    </p>
+
+    <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base md:text-lg mt-4 sm:mt-6 max-w-2xl mx-auto leading-relaxed">
+      ><h2></h2>Mi objetivo es transformar necesidades complejas en productos digitales simples, intuitivos y de alto impacto visual. Entiendo el software como un puente entre la estrategia y la experiencia de usuario, por lo que cuido cada aspecto de la interfaz: desde una arquitectura limpia y rápida hasta microinteracciones que enriquecen la navegación.
+    </p>
+
+    <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base md:text-lg mt-4 sm:mt-6 max-w-2xl mx-auto leading-relaxed">
+      ><h2></h2>Creo firmemente en la innovación constante y en la disciplina de escribir código limpio, escalable y accesible. Si buscas llevar tu presencia digital al siguiente nivel o dar vida a una idea de negocio, construyamos algo increíble juntos.
+    </p>
+
+    <!-- Botón Explorar Trabajos con Neón -->
+    <div class="mt-8 flex justify-center">
+      <div class="glow-btn-container">
+        <a href="#proyectos" class="glow-btn-content bg-sky-500 hover:bg-sky-400 text-slate-950 font-extrabold px-6 py-3 text-xs sm:text-sm flex items-center gap-2 transition-transform hover:scale-105 shadow-lg shadow-sky-500/20">
+          🚀 <span>Explorar Trabajos ↓</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+<!-- SECCIÓN: STACK TECNOLÓGICO (Habilidades principales)                     -->
+<!-- ========================================================================= -->
+<section id="habilidades" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8 w-full block relative z-0">
+  
+  <!-- Encabezado de la sección -->
+  <div class="text-center mb-10 sm:mb-14">
+    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+      Stack Tecnológico de Alto Rendimiento
+    </h2>
+    <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-2">
+      Herramientas y arquitecturas utilizadas en el desarrollo de soluciones web
+    </p>
+  </div>
+
+  <!-- Grilla responsive de 2 columnas para tarjetas -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+    
+    <!-- Tarjeta 1: HTML5 -->
+    <div class="glow-card-container group">
+      <div class="glow-card-content bg-white dark:bg-slate-900 p-6 sm:p-8 flex flex-col justify-between transition-colors">
+        <div class="flex items-center gap-4">
+          <div class="text-3xl p-3 bg-orange-500/10 border border-orange-500/20 rounded-2xl group-hover:scale-110 transition-transform">
+            🟧
+          </div>
+          <div>
+            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white">HTML5</h3>
+            <span class="text-xs font-bold text-orange-600 dark:text-orange-400 bg-orange-500/10 px-2.5 py-1 rounded-full border border-orange-500/20">Semántica & SEO</span>
+          </div>
+        </div>
+        <p class="text-sm text-slate-600 dark:text-slate-300 mt-5 leading-relaxed">
+          Estructuración web accesible, optimizada para buscadores y con los últimos estándares semánticos modernos.
+        </p>
+      </div>
+    </div>
+
+    <!-- Tarjeta 2: Tailwind CSS -->
+    <div class="glow-card-container group">
+      <div class="glow-card-content bg-white dark:bg-slate-900 p-6 sm:p-8 flex flex-col justify-between transition-colors">
+        <div class="flex items-center gap-4">
+          <div class="text-3xl p-3 bg-sky-500/10 border border-sky-500/20 rounded-2xl group-hover:scale-110 transition-transform">
+            🎨
+          </div>
+          <div>
+            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white">Tailwind CSS</h3>
+            <span class="text-xs font-bold text-sky-600 dark:text-sky-400 bg-sky-500/10 px-2.5 py-1 rounded-full border border-sky-500/20">Diseño UI/UX</span>
+          </div>
+        </div>
+        <p class="text-sm text-slate-600 dark:text-slate-300 mt-5 leading-relaxed">
+          Interfaces altamente responsivas, diseño adaptativo, animación interactiva y sistemas de temas personalizados.
+        </p>
+      </div>
+    </div>
+
+    <!-- Tarjeta 3: JavaScript -->
+    <div class="glow-card-container group">
+      <div class="glow-card-content bg-white dark:bg-slate-900 p-6 sm:p-8 flex flex-col justify-between transition-colors">
+        <div class="flex items-center gap-4">
+          <div class="text-3xl p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-2xl group-hover:scale-110 transition-transform">
+            ⚡
+          </div>
+          <div>
+            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white">JavaScript</h3>
+            <span class="text-xs font-bold text-yellow-600 dark:text-yellow-400 bg-yellow-500/10 px-2.5 py-1 rounded-full border border-yellow-500/20">Lógica & DOM</span>
+          </div>
+        </div>
+        <p class="text-sm text-slate-600 dark:text-slate-300 mt-5 leading-relaxed">
+          Programación asíncrona, manipulación dinámica del DOM y consumo de APIs REST eficientes.
+        </p>
+      </div>
+    </div>
+
+    <!-- Tarjeta 4: Git & GitHub -->
+    <div class="glow-card-container group">
+      <div class="glow-card-content bg-white dark:bg-slate-900 p-6 sm:p-8 flex flex-col justify-between transition-colors">
+        <div class="flex items-center gap-4">
+          <div class="text-3xl p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl group-hover:scale-110 transition-transform">
+            🚀
+          </div>
+          <div>
+            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white">Git & GitHub</h3>
+            <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">Control Versiones</span>
+          </div>
+        </div>
+        <p class="text-sm text-slate-600 dark:text-slate-300 mt-5 leading-relaxed">
+          Gestión completa de código fuente, integración continua y despliegues optimizados para producción.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ESPACIADOR FORZADO (Evita colapso de márgenes y solapamiento) -->
+<div class="h-8 sm:h-12 w-full block clear-both" aria-hidden="true"></div>
+
+  <!-- ========================================================================= -->
+<!-- SECCIÓN: TARJETA DE MÉTRICAS (Estadísticas y Estándares)                -->
+<!-- ========================================================================= -->
+<!-- Usamos 'pt-16 sm:pt-24' para obligar a dejar espacio amplio por arriba    -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-24 pb-16 w-full block relative z-10 clear-both">
+  
+  <div class="glow-card-container">
+    <div class="glow-card-content bg-white dark:bg-slate-900 p-6 sm:p-8 md:p-10 transition-colors border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl">
+      
+      <!-- Layout responsive: 1 columna en móviles, 3 columnas en pantallas medianas (md) -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-slate-200 dark:divide-slate-800">
+        
+        <!-- Métrica 1: Cantidad de proyectos -->
+    <div class="pt-6 md:pt-0 group flex flex-col items-center justify-center">
+      <span id="contador-proyectos" class="block text-4xl sm:text-5xl font-black text-sky-400 group-hover:scale-105 transition-transform duration-300">
+        +2
+      </span>
+      <span class="text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 mt-3 block tracking-wider uppercase">
+        Proyectos Publicados
+      </span>
+    </div>
+
+        <!-- Métrica 2: Calidad de código -->
+        <div class="pt-6 md:pt-0 group flex flex-col items-center justify-center">
+          <span id="contador-calidad" class="block text-4xl sm:text-5xl font-black text-emerald-400 group-hover:scale-105 transition-transform duration-300">
+            100%
+          </span>
+          <span class="text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 mt-3 block tracking-wider uppercase">
+            Responsive & Clean Code
+          </span>
+        </div>
+
+        <!-- Métrica 3: Estándar moderno -->
+        <div class="pt-6 md:pt-0 group flex flex-col items-center justify-center">
+          <span class="block text-4xl sm:text-5xl font-black text-indigo-400 group-hover:scale-105 transition-transform duration-300">
+            ES6+
+          </span>
+          <span class="text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 mt-3 block tracking-wider uppercase">
+            Estándares Modernos
+          </span>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+  <!-- SECCIÓN DE PROYECTOS -->
+<section id="proyectos" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 sm:mt-20 pb-16 w-full block relative z-10 clear-both">
+  
+  <!-- Encabezado y Filtros Centralizados -->
+  <div class="flex flex-col items-center text-center justify-center mb-8 sm:mb-12 gap-6">
+    <div>
+      <!-- Badge "MI TRABAJO" con indicador pulsante y resplandor neón -->
+      <span class="badge-mi-trabajo inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs sm:text-sm font-bold uppercase tracking-widest text-sky-400 bg-sky-500/10 border border-sky-400/30 mb-1 cursor-default transition-all duration-300">
+        
+        <!-- Punto / Indicador pulsante -->
+        <span class="relative flex h-2.5 w-2.5">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-sky-500"></span>
+        </span>
+        Mi Trabajo
+      </span>
+
+      <!-- Título Principal más grande con Gradiente Animado -->
+      <h2 class="text-3xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white mt-1">
+        Proyectos Destacados <span class="bg-gradient-to-r from-sky-400 via-indigo-500 to-emerald-400 bg-clip-text text-transparent animate-gradient-text bg-[length:200%_auto]"></span>
+      </h2>
+    </div>
+
+    <!-- Contenedor con borde neón giratorio -->
+<div class="relative p-[2px] rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.01] animated-border-container">
+  
+  <!-- Capa interna (Fondo de los botones) -->
+  <div id="filtrosContainer" class="relative z-10 flex flex-wrap items-center justify-center gap-2 p-1.5 bg-slate-100/95 dark:bg-slate-900/95 backdrop-blur-xl rounded-[14px]" role="group" aria-label="Filtros de proyectos">
+    
+    <button data-categoria="todos" class="filtro-btn active bg-sky-500 hover:bg-sky-400 text-slate-950 font-black px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm cursor-pointer">
+      Todos
+    </button>
+    
+    <button data-categoria="web" class="filtro-btn text-slate-800 dark:text-slate-100 hover:text-sky-500 dark:hover:text-sky-400 hover:bg-slate-200/70 dark:hover:bg-slate-800/80 font-bold px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm cursor-pointer">
+      Web Apps
+    </button>
+    
+    <button data-categoria="landing" class="filtro-btn text-slate-800 dark:text-slate-100 hover:text-sky-500 dark:hover:text-sky-400 hover:bg-slate-200/70 dark:hover:bg-slate-800/80 font-bold px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm cursor-pointer">
+      Landing Pages
+    </button>
+
+  </div>
+</div>
+
+  <!-- Contenedor dinámico de proyectos -->
+  <div id="gridProyectos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Se puebla desde script.js -->
+  </div>
+</section>
+
+  <!-- SECCIÓN SOBRE MÍ / FILOSOFÍA CON NEÓN -->
+  <section id="sobre-mi" class="py-16 sm:py-20 border-t border-slate-200 dark:border-slate-800/80 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+        <span class="text-sky-500 dark:text-sky-400 text-xs font-bold uppercase tracking-wider">Sobre Mí</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Filosofía Profesional</h2>
+        <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-3 leading-relaxed">
+          Principios y valores que guían mi trabajo en el desarrollo de software y la entrega de soluciones digitales.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+        
+        <!-- Misión con Neón -->
+        <div class="glow-card-container">
+          <div class="glow-card-content bg-white dark:bg-slate-900 p-6 sm:p-8 transition-colors h-full flex flex-col">
+            <div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-500 dark:text-sky-400 flex items-center justify-center font-bold text-xl mb-6">
+              🎯
+            </div>
+            <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-3">Misión</h3>
+            <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
+              Diseñar y desarrollar soluciones digitales eficientes, accesibles y de alta calidad que resuelvan problemas reales para negocios y usuarios.
+            </p>
+          </div>
+        </div>
+
+        <!-- Visión con Neón -->
+        <div class="glow-card-container">
+          <div class="glow-card-content bg-white dark:bg-slate-900 p-6 sm:p-8 transition-colors h-full flex flex-col">
+            <div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-500 dark:text-sky-400 flex items-center justify-center font-bold text-xl mb-6">
+              🚀
+            </div>
+            <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-3">Visión</h3>
+            <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
+              Consolidarme como un desarrollador web integral de referencia, creando plataformas innovadoras y escalables con estándares modernos.
+            </p>
+          </div>
+        </div>
+
+        <!-- Valores con Neón -->
+        <div class="glow-card-container">
+          <div class="glow-card-content bg-white dark:bg-slate-900 p-6 sm:p-8 transition-colors h-full flex flex-col">
+            <div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-500 dark:text-sky-400 flex items-center justify-center font-bold text-xl mb-6">
+              💎
+            </div>
+            <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-3">Valores</h3>
+            <ul class="space-y-2 text-slate-600 dark:text-slate-400 text-xs sm:text-sm">
+              <li><strong class="text-slate-800 dark:text-slate-200">Integridad:</strong> Transparencia y ética.</li>
+              <li><strong class="text-slate-800 dark:text-slate-200">Honestidad:</strong> Comunicación clara.</li>
+              <li><strong class="text-slate-800 dark:text-slate-200">Responsabilidad:</strong> Compromiso total.</li>
+              <li><strong class="text-slate-800 dark:text-slate-200">Solidaridad:</strong> Colaboración activa.</li>
+              <li><strong class="text-slate-800 dark:text-slate-200">Servicio:</strong> Orientación al cliente.</li>
+              <li><strong class="text-slate-800 dark:text-slate-200">Compromiso:</strong> Entrega con excelencia.</li>
+              <li><strong class="text-slate-800 dark:text-slate-200">Calidad:</strong> Código limpio y optimizado.</li>
+              <li><strong class="text-slate-800 dark:text-slate-200">Innovación:</strong> Aprendizaje continuo.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+    
+    <!-- TARJETA CTA CON MARGEN INFERIOR Y MENSAJE DE WHATSAPP CORREGIDO -->
+<div class="glow-card-container mb-12 sm:mb-16">
+  <div class="glow-card-content bg-white dark:bg-slate-900 p-8 sm:p-12 text-center transition-colors">
+    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">¿Tienes un proyecto en mente?</h2>
+    <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-2 max-w-md mx-auto leading-relaxed">
+      Construyamos juntos la próxima solución para tu negocio.
+    </p>
+    
+    <div class="mt-6 flex justify-center">
+      <div class="glow-btn-container">
+        <a href="https://wa.me/18093031738?text=Hola%20Domingo,%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20conversar%20contigo%20sobre%20un%20proyecto." 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           aria-label="Contactar por WhatsApp" 
+           class="glow-btn-content bg-sky-500 hover:bg-sky-400 text-slate-950 font-extrabold px-6 py-3 text-xs sm:text-sm flex items-center gap-2 transition-transform hover:scale-105 shadow-lg shadow-sky-500/20">
+          
+          <!-- Ícono SVG Oficial de WhatsApp -->
+          <svg class="w-4 h-4 shrink-0 fill-current" viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+          </svg>
+          <span>WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+    
+   <!-- FOOTER CENTRADO CON REDES COMPLETAS -->
+<footer class="w-full relative z-10 border-t border-slate-200 dark:border-slate-800/80 bg-slate-100/50 dark:bg-slate-950/80 backdrop-blur-md py-4 transition-colors">
+  <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+    <div class="flex flex-wrap items-center justify-center gap-3 text-center">
+      
+      <!-- Texto Copyright / Creado Con -->
+      <p class="text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400">
+        © 2026 Domingo Feliz (@dofepro). Todos los derechos reservados. Construido con <span class="text-sky-500 animate-pulse inline-block mx-0.5">✦</span> Tailwind CSS
+      </p>
+
+      <!-- Redes Sociales (A la derecha del texto) -->
+      <div class="flex items-center gap-2 shrink-0">
+        <!-- GitHub -->
+        <a href="https://github.com/dofepro" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="p-1.5 rounded-lg bg-slate-200/70 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-sky-500 dark:hover:text-sky-400 hover:border-sky-500/40 hover:scale-110 transition-all duration-300 shadow-sm">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        </a>
+
+        <!-- LinkedIn -->
+        <a href="https://linkedin.com/in/dofepro" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="p-1.5 rounded-lg bg-slate-200/70 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-sky-500 dark:hover:text-sky-400 hover:border-sky-500/40 hover:scale-110 transition-all duration-300 shadow-sm">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+        </a>
+
+        <!-- Instagram -->
+        <a href="https://instagram.com/dofepro" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="p-1.5 rounded-lg bg-slate-200/70 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-sky-500 dark:hover:text-sky-400 hover:border-sky-500/40 hover:scale-110 transition-all duration-300 shadow-sm">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+  <!-- Botón Ir Arriba Flotante y Animado -->
+<button id="btnScrollTop" 
+        aria-label="Volver arriba"
+        class="fixed bottom-6 right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center rounded-full bg-sky-500 text-slate-950 shadow-[0_0_15px_rgba(14,165,233,0.5)] opacity-0 pointer-events-none transition-all duration-300 ease-out hover:bg-sky-400 hover:scale-110 active:scale-95 hover:shadow-[0_0_25px_rgba(14,165,233,0.8)] cursor-pointer group">
+  
+  <svg class="w-6 h-6 sm:w-7 sm:h-7 transition-transform duration-300 group-hover:-translate-y-1" 
+       fill="none" 
+       stroke="currentColor" 
+       stroke-width="3" 
+       viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
+  </svg>
+</button>
+
+  <script src="script.js"></script>
+
+
+<!-- MODAL DE CONTACTO CON <dialog> -->
+<dialog id="modalContacto" class="bg-transparent backdrop:bg-slate-950/85 backdrop:backdrop-blur-md p-4 m-auto max-w-md w-full focus:outline-none border-none outline-none">
+  
+  <div id="modalContactoContent" class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl scale-95 opacity-0 transition-all duration-150">
+    
+    <!-- Encabezado + Botón X -->
+    <div class="flex items-center justify-between gap-4 mb-4">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-semibold uppercase tracking-wider">
+        ✉️ Envíame un correo
+      </span>
+      
+      <button onclick="toggleContactoModal()" type="button" aria-label="Cerrar modal" 
+              class="shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-slate-800 border border-slate-700 text-slate-300 hover:text-white hover:bg-sky-500 hover:border-sky-500 transition-all cursor-pointer font-bold text-sm">
+        ✕
+      </button>
+    </div>
+
+    <h2 class="text-2xl font-black text-white mb-6">Formulario de Contacto</h2>
+
+    <!-- Formulario -->
+    <form action="https://formspree.io/f/TU_FORM_ID" method="POST" class="space-y-4">
+      <div>
+        <label for="nombre" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Nombre completo</label>
+        <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre" 
+               class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-sky-500 transition-all placeholder:text-slate-600">
+      </div>
+
+      <div>
+        <label for="email" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Correo electrónico</label>
+        <input type="email" id="email" name="email" required placeholder="tu@email.com" 
+               class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-sky-500 transition-all placeholder:text-slate-600">
+      </div>
+
+      <div>
+        <label for="asunto" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Asunto</label>
+        <input type="text" id="asunto" name="_subject" required placeholder="Ej. Propuesta de proyecto" 
+               class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-sky-500 transition-all placeholder:text-slate-600">
+      </div>
+
+      <div>
+        <label for="mensaje" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Mensaje</label>
+        <textarea id="mensaje" name="mensaje" rows="3" required placeholder="Cuéntame que quieres construir..." 
+                  class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-sky-500 transition-all resize-none placeholder:text-slate-600"></textarea>
+      </div>
+
+      <button type="submit" 
+              class="w-full py-3.5 px-6 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-extrabold text-sm transition-all shadow-lg shadow-sky-500/20 cursor-pointer mt-2">
+        🚀 Enviar Mensaje
+      </button>
+    </form>
+  </div>
+</dialog>
+  
+</body>
+</html>

@@ -1,0 +1,221 @@
+@import "tailwindcss";
+
+/* --------------------------------------------------
+   ANIMACIÓN DE BORDE GIRATORIO
+-------------------------------------------------- */
+@keyframes rotateGlow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Envoltorio General / Tarjetas */
+.glow-card-container {
+  position: relative;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  padding: 2px;
+  isolation: isolate; /* Crea un contexto de apilamiento propio */
+}
+
+.glow-card-container::before {
+  content: '';
+  position: absolute;
+  inset: -50%; /* En lugar de top: -100% / width: 300% */
+  width: 200%;
+  height: 200%;
+  margin: auto;
+  background: conic-gradient(from 0deg, transparent 0%, #06b6d4 25%, #3b82f6 50%, #8b5cf6 75%, transparent 100%);
+  animation: rotateGlow 4s linear infinite;
+  z-index: -1;
+}
+
+.glow-card-content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  border-radius: calc(1.25rem - 2px);
+}
+
+/* Envoltorio para Botones */
+.glow-btn-container {
+  position: relative;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  padding: 2px;
+  display: inline-flex;
+  isolation: isolate;
+}
+
+.glow-btn-container::before {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  margin: auto;
+  background: conic-gradient(from 0deg, transparent 0%, #06b6d4 25%, #3b82f6 50%, #8b5cf6 75%, transparent 100%);
+  animation: rotateGlow 3s linear infinite;
+  z-index: -1;
+}
+
+.glow-btn-content {
+  position: relative;
+  z-index: 1;
+  border-radius: calc(0.75rem - 2px);
+}
+
+/* Envoltorio para Botones Circulares u Íconos */
+.glow-icon-container {
+  position: relative;
+  border-radius: 0.85rem;
+  overflow: hidden;
+  padding: 2px;
+  display: inline-flex;
+  isolation: isolate;
+}
+
+.glow-icon-container::before {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  margin: auto;
+  background: conic-gradient(from 0deg, transparent 0%, #06b6d4 25%, #3b82f6 50%, #8b5cf6 75%, transparent 100%);
+  animation: rotateGlow 3s linear infinite;
+  z-index: -1;
+}
+
+.glow-icon-content {
+  position: relative;
+  z-index: 1;
+  border-radius: calc(0.85rem - 2px);
+}
+
+.texto-gradiente {
+  background: linear-gradient(135deg, #38bdf8, #818cf8, #34d399);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+/* ==========================================================================
+   ANIMACIONES DE ENCABEZADO Y BADGE
+   ========================================================================== */
+
+/* 1. Animación del Gradiente Multicolor del Título */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient-text {
+  animation: gradientShift 6s ease infinite;
+}
+
+/* 2. Animación de Resplandor Neón para el Badge "Mi Trabajo" */
+@keyframes neonGlow {
+  0% {
+    box-shadow: 0 0 5px rgba(56, 189, 248, 0.2), inset 0 0 5px rgba(56, 189, 248, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.5), inset 0 0 8px rgba(56, 189, 248, 0.25);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(56, 189, 248, 0.2), inset 0 0 5px rgba(56, 189, 248, 0.1);
+  }
+}
+
+.badge-mi-trabajo {
+  animation: neonGlow 3s infinite ease-in-out;
+}
+
+/* ==========================================================================
+   BORDE CON COLORES GIRANDO (ANIMATED GRADIENT BORDER)
+   ========================================================================== */
+
+/* Registro de la propiedad personalizada para rotar en CSS */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* Animación de rotación continua 360 grados */
+@keyframes spinBorder {
+  to {
+    --angle: 360deg;
+  }
+}
+
+/* Pseudo-elemento giratorio de fondo */
+.animated-border-container::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 200%;
+  height: 500%;
+  background-image: conic-gradient(
+    from var(--angle),
+    #38bdf8, /* Sky 400 */
+    #818cf8, /* Indigo 400 */
+    #c084fc, /* Purple 400 */
+    #34d399, /* Emerald 400 */
+    #38bdf8  /* Cierra el ciclo en Sky */
+  );
+  animation: spinBorder 4s linear infinite;
+  z-index: 0;
+}
+
+/* Animaciones del Botón Activo */
+@keyframes filterGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(14, 165, 233, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(14, 165, 233, 0.8);
+  }
+}
+
+@keyframes buttonPop {
+  0% { transform: scale(0.95); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1.05); }
+}
+
+.filtro-btn {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.filtro-btn.active {
+  animation: filterGlow 2.5s infinite ease-in-out, buttonPop 0.3s ease-out;
+  transform: scale(1.05);
+}
+
+/* ==========================================================================
+   ESTADOS Y ANIMACIÓN DEL BOTÓN VOLVER ARRIBA
+   ========================================================================== */
+
+/* Animación de flotación constante */
+@keyframes floatTop {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Clase que activa el JS cuando se hace Scroll */
+#btnScrollTop.show-btn {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  animation: floatTop 2.5s infinite ease-in-out;
+}
+
+/* Fuerza al modal a ignorar otros contextos de apilamiento */
+#modalContacto {
+  position: fixed !important;
+  z-index: 2147483647 !important; /* Valor máximo de z-index posible */
+}

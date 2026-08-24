@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aroma & Grano - Cafetería de Especialidad</title>
+  
+  <!-- CDN de Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Configuración personalizada de Tailwind -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              dark: '#3E2723',
+              accent: '#D84315',
+              light: '#FAFAFA',
+              surface: '#FFF8E1'
+            }
+          },
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-brand-light dark:bg-stone-900 text-stone-800 dark:text-stone-100 font-sans flex flex-col min-h-screen transition-colors duration-300">
+
+  <!-- HEADER / NAVEGACIÓN -->
+  <header class="bg-white/95 dark:bg-stone-900/95 backdrop-blur-md shadow-sm sticky top-0 z-40 transition-colors border-b border-stone-200 dark:border-stone-800">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+      
+      <!-- Logo Marca -->
+      <a href="#" class="flex items-center gap-2.5 group">
+        <div class="p-2 bg-stone-100 dark:bg-stone-800 rounded-xl group-hover:scale-105 transition-transform shrink-0">
+          <svg class="w-6 h-6 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 1v3M10 1v3M14 1v3"></path>
+          </svg>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-xl sm:text-2xl font-bold text-stone-900 dark:text-amber-400 leading-tight">
+            Aroma & <span class="text-amber-600 dark:text-amber-400">Grano</span>
+          </span>
+          <span class="text-[9px] tracking-widest uppercase font-semibold text-amber-700 dark:text-amber-300 -mt-1">
+            JEHOVA JIREH
+          </span>
+        </div>
+      </a>
+
+      <!-- Menú Escritorio -->
+      <nav class="hidden md:flex items-center gap-6 font-semibold text-sm">
+        <a href="#inicio" class="text-amber-600 dark:text-amber-400 hover:text-amber-700 transition-colors">Inicio</a>
+        <a href="#nosotros" class="text-stone-700 dark:text-stone-200 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Nosotros</a>
+        <a href="#menu" class="text-stone-700 dark:text-stone-200 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Menú</a>
+        <a href="#opiniones" class="text-stone-700 dark:text-stone-200 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Opiniones</a>
+        <a href="#reserva" class="text-stone-700 dark:text-stone-200 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Reserva</a>
+      </nav>
+
+      <!-- Botones de Acción -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Toggle Modo Oscuro -->
+        <button id="themeToggle" aria-label="Cambiar tema" class="p-2.5 rounded-xl bg-stone-100 dark:bg-stone-800 text-sm hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors text-stone-800 dark:text-amber-300">
+          🌙
+        </button>
+        
+        <!-- Botón Carrito -->
+        <button id="cartBtn" class="relative bg-amber-700 dark:bg-amber-600 text-white px-3.5 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-1.5 hover:bg-amber-800 transition-colors shadow-sm">
+          🛒 <span id="cartCount" class="bg-stone-900 dark:bg-stone-950 text-white text-xs px-2 py-0.5 rounded-full font-bold">0</span>
+        </button>
+
+        <!-- Botón Ver Portafolio (Escritorio) -->
+        <a href="../../index.html" class="hidden sm:flex items-center gap-1.5 bg-stone-100 dark:bg-stone-800 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-600 text-stone-700 dark:text-stone-200 border border-stone-300 dark:border-stone-700 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm">
+          <span>←</span>
+          <span>Ver Portafolio</span>
+        </a>
+
+        <!-- Botón Hamburguesa Móvil -->
+        <button id="mobileMenuBtn" onclick="toggleMobileMenu()" aria-label="Abrir menú" class="md:hidden p-2.5 rounded-xl bg-stone-100 dark:bg-stone-800 text-stone-800 dark:text-stone-200 hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors text-lg flex items-center justify-center w-10 h-10">
+          <span id="menuIcon">☰</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Menú Móvil Desplegable -->
+    <div id="mobileMenu" class="hidden md:hidden overflow-hidden transition-all duration-300 bg-white dark:bg-stone-900 border-t border-stone-200 dark:border-stone-800 shadow-xl">
+      <nav class="flex flex-col p-4 space-y-1 font-medium text-sm">
+        <a href="#inicio" onclick="toggleMobileMenu()" class="flex items-center justify-between px-4 py-3 rounded-xl bg-amber-50 dark:bg-stone-800/80 text-amber-600 dark:text-amber-400 font-semibold transition-colors">
+          <span>Inicio</span>
+          <span>→</span>
+        </a>
+        <a href="#nosotros" onclick="toggleMobileMenu()" class="flex items-center justify-between px-4 py-3 rounded-xl text-stone-700 dark:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors">
+          <span>Nosotros</span>
+          <span>→</span>
+        </a>
+        <a href="#menu" onclick="toggleMobileMenu()" class="flex items-center justify-between px-4 py-3 rounded-xl text-stone-700 dark:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors">
+          <span>Menú</span>
+          <span>→</span>
+        </a>
+        <a href="#opiniones" onclick="toggleMobileMenu()" class="flex items-center justify-between px-4 py-3 rounded-xl text-stone-700 dark:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors">
+          <span>Opiniones</span>
+          <span>→</span>
+        </a>
+        <a href="#reserva" onclick="toggleMobileMenu()" class="flex items-center justify-between px-4 py-3 rounded-xl bg-amber-600 text-white font-semibold hover:bg-amber-700 transition-colors shadow-sm">
+          <span>Reservar Mesa</span>
+          <span>📅</span>
+        </a>
+
+        <!-- Botón Ver Portafolio (Opción Móvil) -->
+        <a href="../../index.html" class="flex items-center justify-between px-4 py-3 rounded-xl bg-stone-100 dark:bg-stone-800 text-stone-800 dark:text-stone-200 font-bold hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors border border-stone-300 dark:border-stone-700 mt-2">
+          <span class="flex items-center gap-2">← Ver Portafolio</span>
+          <span>🏠</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- PANEL LATERAL DEL CARRITO -->
+  <div id="cartModal" class="fixed inset-0 z-50 hidden">
+    <div id="cartOverlay" class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+    <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white dark:bg-stone-900 shadow-2xl p-6 flex flex-col justify-between text-stone-900 dark:text-stone-100 transition-colors">
+      <div>
+        <div class="flex justify-between items-center border-b border-stone-200 dark:border-stone-800 pb-4">
+          <h3 class="text-xl font-bold flex items-center gap-2">🛒 Tu Carrito</h3>
+          <button id="closeCartBtn" class="text-stone-500 hover:text-stone-800 dark:hover:text-stone-200 text-2xl font-bold">&times;</button>
+        </div>
+        <div id="cartItems" class="mt-4 space-y-3 max-h-[60vh] overflow-y-auto">
+          <p class="text-gray-500 dark:text-stone-400 text-sm text-center py-8">Tu carrito está vacío.</p>
+        </div>
+      </div>
+      <div class="border-t border-stone-200 dark:border-stone-800 pt-4">
+        <div class="flex justify-between items-center text-lg font-bold mb-4">
+          <span>Total:</span>
+          <span id="cartTotal" class="text-amber-600 dark:text-amber-400">$0 DOP</span>
+        </div>
+        <button onclick="enviarPedidoWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl font-bold flex justify-center items-center gap-2 shadow-lg transition-colors">
+          <span>Pedir por WhatsApp</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1. HERO / INICIO -->
+  <section id="inicio" class="bg-brand-surface dark:bg-stone-800/60 py-16 md:py-24 border-b border-orange-100 dark:border-stone-800 transition-colors">
+    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <span class="text-brand-accent dark:text-amber-400 font-semibold tracking-wide uppercase text-sm">Cafetería & Co-working</span>
+        <h1 class="text-4xl md:text-5xl font-bold mt-2 leading-tight dark:text-white">
+          El espacio perfecto para tu café y tus ideas
+        </h1>
+        <p class="text-gray-700 dark:text-stone-300 text-lg mt-4 leading-relaxed">
+          Café artesanal de origen dominicano, repostería fresca y un ambiente diseñado exclusivamente para tu productividad y confort.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a href="#menu" class="bg-brand-accent dark:bg-amber-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-700 dark:hover:bg-amber-500 transition-colors shadow-lg">
+            Ver Menú Digital
+          </a>
+          <a href="#reserva" class="border-2 border-brand-dark dark:border-amber-400 text-brand-dark dark:text-amber-400 px-6 py-3 rounded-lg font-semibold hover:bg-brand-dark dark:hover:bg-amber-400 hover:text-white dark:hover:text-stone-900 transition-colors">
+            Reservar Espacio
+          </a>
+        </div>
+      </div>
+      <div class="flex justify-center">
+        <div class="w-full max-h-80 bg-stone-200 dark:bg-stone-700 rounded-2xl flex items-center justify-center text-stone-600 dark:text-stone-300 shadow-xl overflow-hidden p-12 text-center border-4 border-white dark:border-stone-600">
+          <div>
+            <span class="text-5xl">☕📖</span>
+            <p class="mt-2 text-sm font-medium">[ Espacio de Trabajo & Café ]</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. NOSOTROS -->
+  <section id="nosotros" class="py-16 bg-white dark:bg-stone-900 border-b border-gray-100 dark:border-stone-800 transition-colors">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="flex justify-center">
+          <div class="w-full h-72 bg-amber-100 dark:bg-stone-800 rounded-2xl flex items-center justify-center text-amber-800 dark:text-amber-400 p-8 border-2 border-amber-200 dark:border-stone-700 shadow-inner text-center">
+            <div>
+              <span class="text-5xl">🌱☕</span>
+              <h4 class="font-bold mt-3 text-xl">Granos Seleccionados</h4>
+              <p class="text-xs text-stone-600 dark:text-stone-400 mt-1">100% Arábica de Jarabacoa y Barahona</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <span class="text-amber-600 dark:text-amber-400 font-semibold text-sm uppercase tracking-wider">Nuestra Historia</span>
+          <h2 class="text-3xl font-bold dark:text-white mt-1">Pasión por cada tostado</h2>
+          <p class="text-gray-600 dark:text-stone-300 mt-4 leading-relaxed">
+            En <strong>Aroma & Grano</strong> combinamos la tradición del café dominicano con técnicas modernas de preparación. Nacimos con la visión de ser el refugio ideal para creativos, profesionales y amantes del buen café.
+          </p>
+          <p class="text-gray-600 dark:text-stone-300 mt-3 leading-relaxed">
+            Trabajamos directamente con agricultores locales para asegurar un comercio justo y ofrecerte tazas con notas únicas de cacao, cítricos y caramelo.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. MENÚ CON FILTROS -->
+  <section id="menu" class="py-16 max-w-6xl mx-auto px-4 w-full">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl font-bold dark:text-white">Nuestras Especialidades</h2>
+      <p class="text-gray-600 dark:text-stone-400 mt-2">Selecciona tu categoría favorita</p>
+      
+      <div class="flex justify-center gap-3 mt-6">
+        <button onclick="filtrarMenu('todos')" class="filter-btn active bg-brand-dark dark:bg-amber-600 text-white px-4 py-1.5 rounded-full text-sm font-medium">Todos</button>
+        <button onclick="filtrarMenu('bebida')" class="filter-btn bg-stone-200 dark:bg-stone-800 text-stone-800 dark:text-stone-200 hover:bg-stone-300 dark:hover:bg-stone-700 px-4 py-1.5 rounded-full text-sm font-medium transition-colors">Bebidas</button>
+        <button onclick="filtrarMenu('comida')" class="filter-btn bg-stone-200 dark:bg-stone-800 text-stone-800 dark:text-stone-200 hover:bg-stone-300 dark:hover:bg-stone-700 px-4 py-1.5 rounded-full text-sm font-medium transition-colors">Comidas & Postres</button>
+      </div>
+    </div>
+
+    <!-- TARJETAS DEL MENÚ EN GRID -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full" id="menuContainer">
+      
+      <!-- Producto 1 -->
+      <div class="menu-item bebida bg-white dark:bg-stone-800 rounded-2xl shadow-md overflow-hidden flex flex-col justify-between transition-transform hover:-translate-y-1">
+        <div>
+          <div class="h-48 overflow-hidden bg-stone-200">
+            <img src="https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?q=80&w=600&auto=format&fit=crop" alt="Cold Brew Artesanal" class="w-full h-full object-cover">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold dark:text-white">Cold Brew Artesanal</h3>
+            <p class="text-gray-600 dark:text-stone-400 text-sm mt-2">Extracción en frío durante 18 horas con notas a chocolate y avellanas.</p>
+          </div>
+        </div>
+        <div class="p-6 pt-0 flex justify-between items-center">
+          <span class="text-lg font-bold text-brand-accent dark:text-amber-400">$210 DOP</span>
+          <button onclick="agregarAlCarrito('Cold Brew Artesanal', 210)" class="bg-brand-dark dark:bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-brand-accent dark:hover:bg-amber-500 transition-colors">Pedir</button>
+        </div>
+      </div>
+
+      <!-- Producto 2 -->
+      <div class="menu-item bebida bg-white dark:bg-stone-800 rounded-2xl shadow-md overflow-hidden flex flex-col justify-between transition-transform hover:-translate-y-1">
+        <div>
+          <div class="h-48 overflow-hidden bg-stone-200">
+            <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?q=80&w=600&auto=format&fit=crop" alt="Cappuccino Vainilla" class="w-full h-full object-cover">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold dark:text-white">Cappuccino Vainilla</h3>
+            <p class="text-gray-600 dark:text-stone-400 text-sm mt-2">Espresso doble, leche cremada al vapor y jarabe artesanal de vainilla.</p>
+          </div>
+        </div>
+        <div class="p-6 pt-0 flex justify-between items-center">
+          <span class="text-lg font-bold text-brand-accent dark:text-amber-400">$180 DOP</span>
+          <button onclick="agregarAlCarrito('Cappuccino Vainilla', 180)" class="bg-brand-dark dark:bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-brand-accent dark:hover:bg-amber-500 transition-colors">Pedir</button>
+        </div>
+      </div>
+
+      <!-- Producto 3 -->
+      <div class="menu-item bebida bg-white dark:bg-stone-800 rounded-2xl shadow-md overflow-hidden flex flex-col justify-between transition-transform hover:-translate-y-1">
+        <div>
+          <div class="h-48 overflow-hidden bg-stone-200">
+            <img src="https://images.unsplash.com/photo-1536256263959-770b48d82b0a?q=80&w=600&auto=format&fit=crop" alt="Iced Matcha Latte" class="w-full h-full object-cover">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold dark:text-white">Iced Matcha Latte</h3>
+            <p class="text-gray-600 dark:text-stone-400 text-sm mt-2">Matcha orgánico ceremonial, leche de almendras y un toque de miel silvestre.</p>
+          </div>
+        </div>
+        <div class="p-6 pt-0 flex justify-between items-center">
+          <span class="text-lg font-bold text-brand-accent dark:text-amber-400">$230 DOP</span>
+          <button onclick="agregarAlCarrito('Iced Matcha Latte', 230)" class="bg-brand-dark dark:bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-brand-accent dark:hover:bg-amber-500 transition-colors">Pedir</button>
+        </div>
+      </div>
+
+      <!-- Producto 4 -->
+      <div class="menu-item comida bg-white dark:bg-stone-800 rounded-2xl shadow-md overflow-hidden flex flex-col justify-between transition-transform hover:-translate-y-1">
+        <div>
+          <div class="h-48 overflow-hidden bg-stone-200">
+            <img src="https://images.unsplash.com/photo-1525351484163-7529414344d8?q=80&w=600&auto=format&fit=crop" alt="Toast de Aguacate" class="w-full h-full object-cover">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold dark:text-white">Toast de Aguacate</h3>
+            <p class="text-gray-600 dark:text-stone-400 text-sm mt-2">Pan de masa madre tostado, aguacate fresco, huevo ponchado y sésamo.</p>
+          </div>
+        </div>
+        <div class="p-6 pt-0 flex justify-between items-center">
+          <span class="text-lg font-bold text-brand-accent dark:text-amber-400">$250 DOP</span>
+          <button onclick="agregarAlCarrito('Toast de Aguacate', 250)" class="bg-brand-dark dark:bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-brand-accent dark:hover:bg-amber-500 transition-colors">Pedir</button>
+        </div>
+      </div>
+
+      <!-- Producto 5 -->
+      <div class="menu-item comida bg-white dark:bg-stone-800 rounded-2xl shadow-md overflow-hidden flex flex-col justify-between transition-transform hover:-translate-y-1">
+        <div>
+          <div class="h-48 overflow-hidden bg-stone-200">
+            <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=600&auto=format&fit=crop" alt="Croissant Hojaldrado" class="w-full h-full object-cover">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold dark:text-white">Croissant Artesanal</h3>
+            <p class="text-gray-600 dark:text-stone-400 text-sm mt-2">Hojaldre horneado diariamente relleno de queso gouda derretido y pavo.</p>
+          </div>
+        </div>
+        <div class="p-6 pt-0 flex justify-between items-center">
+          <span class="text-lg font-bold text-brand-accent dark:text-amber-400">$220 DOP</span>
+          <button onclick="agregarAlCarrito('Croissant Artesanal', 220)" class="bg-brand-dark dark:bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-brand-accent dark:hover:bg-amber-500 transition-colors">Pedir</button>
+        </div>
+      </div>
+
+      <!-- Producto 6 -->
+      <div class="menu-item comida bg-white dark:bg-stone-800 rounded-2xl shadow-md overflow-hidden flex flex-col justify-between transition-transform hover:-translate-y-1">
+        <div>
+          <div class="h-48 overflow-hidden bg-stone-200">
+            <img src="https://images.unsplash.com/photo-1533134242443-d4fd215305ad?q=80&w=600&auto=format&fit=crop" alt="Cheesecake de Frutos Rojos" class="w-full h-full object-cover">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold dark:text-white">Cheesecake Frutos Rojos</h3>
+            <p class="text-gray-600 dark:text-stone-400 text-sm mt-2">Cremosa receta estilo New York con jalea casera de fresas y moras silvestres.</p>
+          </div>
+        </div>
+        <div class="p-6 pt-0 flex justify-between items-center">
+          <span class="text-lg font-bold text-brand-accent dark:text-amber-400">$195 DOP</span>
+          <button onclick="agregarAlCarrito('Cheesecake Frutos Rojos', 195)" class="bg-brand-dark dark:bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-brand-accent dark:hover:bg-amber-500 transition-colors">Pedir</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 4. OPINIONES -->
+  <section id="opiniones" class="py-16 bg-brand-surface dark:bg-stone-800/40 border-t border-b border-orange-100 dark:border-stone-800 transition-colors">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold dark:text-white">Opiniones de Nuestros Clientes</h2>
+        <p class="text-gray-600 dark:text-stone-400 mt-2">Comparte tu experiencia o lee lo que otros dicen de nosotros</p>
+      </div>
+
+      <!-- Formulario de Opinión -->
+      <div class="max-w-2xl mx-auto bg-white dark:bg-stone-800 p-6 rounded-2xl shadow-md border border-stone-200 dark:border-stone-700 mb-12">
+        <h3 class="text-lg font-bold dark:text-white mb-4 text-center">✍️ Déjanos tu opinión</h3>
+        <form id="opinionForm" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="autorOpinion" class="block text-xs font-semibold uppercase text-stone-600 dark:text-stone-300 mb-1">Nombre</label>
+              <input type="text" id="autorOpinion" required placeholder="Tu nombre" class="w-full px-3.5 py-2 rounded-lg border border-stone-300 dark:border-stone-600 bg-stone-50 dark:bg-stone-900 text-stone-800 dark:text-white text-sm focus:ring-2 focus:ring-amber-500 focus:outline-none">
+            </div>
+            <div>
+              <label for="ratingOpinion" class="block text-xs font-semibold uppercase text-stone-600 dark:text-stone-300 mb-1">Puntuación</label>
+              <select id="ratingOpinion" class="w-full px-3.5 py-2 rounded-lg border border-stone-300 dark:border-stone-600 bg-stone-50 dark:bg-stone-900 text-stone-800 dark:text-white text-sm focus:ring-2 focus:ring-amber-500 focus:outline-none">
+                <option value="5">★★★★★ (5/5 Excelente)</option>
+                <option value="4">★★★★☆ (4/5 Muy Bueno)</option>
+                <option value="3">★★★☆☆ (3/5 Bueno)</option>
+                <option value="2">★★☆☆☆ (2/5 Regular)</option>
+                <option value="1">★☆☆☆☆ (1/5 Malo)</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label for="textoOpinion" class="block text-xs font-semibold uppercase text-stone-600 dark:text-stone-300 mb-1">Tu Comentario</label>
+            <textarea id="textoOpinion" rows="3" required placeholder="¿Qué tal estuvo tu café o la atención?" class="w-full px-3.5 py-2 rounded-lg border border-stone-300 dark:border-stone-600 bg-stone-50 dark:bg-stone-900 text-stone-800 dark:text-white text-sm focus:ring-2 focus:ring-amber-500 focus:outline-none"></textarea>
+          </div>
+          <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-2.5 rounded-lg transition-colors text-sm shadow">
+            Publicar Opinión
+          </button>
+        </form>
+      </div>
+
+      <!-- Lista de Opiniones -->
+      <div id="opinionesLista" class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white dark:bg-stone-800 p-6 rounded-2xl shadow-sm border border-stone-100 dark:border-stone-700">
+          <div class="text-amber-500 mb-2">★★★★★</div>
+          <p class="text-gray-700 dark:text-stone-300 text-sm italic">"El mejor Cold Brew que he probado en la ciudad. El ambiente para trabajar con la laptop es súper tranquilo y la señal de Wi-Fi es excelente."</p>
+          <div class="mt-4 pt-3 border-t border-stone-100 dark:border-stone-700 flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-amber-200 dark:bg-amber-600 flex items-center justify-center font-bold text-amber-800 dark:text-white text-xs">CP</div>
+            <div>
+              <h4 class="font-bold text-sm dark:text-white">Carlos Peña</h4>
+              <span class="text-xs text-gray-500 dark:text-stone-400">Cliente Frecuente</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-stone-800 p-6 rounded-2xl shadow-sm border border-stone-100 dark:border-stone-700">
+          <div class="text-amber-500 mb-2">★★★★★</div>
+          <p class="text-gray-700 dark:text-stone-300 text-sm italic">"Los tostados de aguacate y el Cappuccino de Vainilla son indispensables para mis mañanas. La atención del personal es siempre impecable."</p>
+          <div class="mt-4 pt-3 border-t border-stone-100 dark:border-stone-700 flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-orange-200 dark:bg-orange-600 flex items-center justify-center font-bold text-orange-800 dark:text-white text-xs">MG</div>
+            <div>
+              <h4 class="font-bold text-sm dark:text-white">María Gómez</h4>
+              <span class="text-xs text-gray-500 dark:text-stone-400">Diseñadora UX</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-stone-800 p-6 rounded-2xl shadow-sm border border-stone-100 dark:border-stone-700">
+          <div class="text-amber-500 mb-2">★★★★★</div>
+          <p class="text-gray-700 dark:text-stone-300 text-sm italic">"Reservamos el área para una reunión de equipo y todo salió perfecto. Un café de especialidad con verdadero sabor local."</p>
+          <div class="mt-4 pt-3 border-t border-stone-100 dark:border-stone-700 flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-emerald-200 dark:bg-emerald-600 flex items-center justify-center font-bold text-emerald-800 dark:text-white text-xs">RD</div>
+            <div>
+              <h4 class="font-bold text-sm dark:text-white">Rafael Díaz</h4>
+              <span class="text-xs text-gray-500 dark:text-stone-400">Empresario</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 5. RESERVA -->
+  <section id="reserva" class="bg-white dark:bg-stone-900 py-16 transition-colors">
+    <div class="max-w-xl mx-auto px-4">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-bold text-brand-dark dark:text-white">Reserva tu Espacio</h2>
+        <p class="text-gray-600 dark:text-stone-400 mt-2">Asegura tu mesa para trabajar o compartir con amigos.</p>
+      </div>
+
+      <form id="reservaForm" class="space-y-4 bg-brand-light dark:bg-stone-800 p-8 rounded-2xl shadow-inner border border-gray-100 dark:border-stone-700 transition-colors">
+        <div>
+          <label for="nombre" class="block text-sm font-semibold text-gray-700 dark:text-stone-200 mb-1">Nombre Completo</label>
+          <input type="text" id="nombre" required placeholder="Ej: Juan Pérez" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-stone-600 bg-white dark:bg-stone-900 dark:text-white focus:ring-2 focus:ring-brand-accent focus:outline-none">
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label for="personas" class="block text-sm font-semibold text-gray-700 dark:text-stone-200 mb-1">Personas</label>
+            <select id="personas" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-stone-600 bg-white dark:bg-stone-900 dark:text-white focus:ring-2 focus:ring-brand-accent focus:outline-none">
+              <option value="1">1 Persona</option>
+              <option value="2">2 Personas</option>
+              <option value="4">4 Personas</option>
+              <option value="6">Grupo (6+)</option>
+            </select>
+          </div>
+          <div>
+            <label for="fecha" class="block text-sm font-semibold text-gray-700 dark:text-stone-200 mb-1">Fecha y Hora</label>
+            <input type="datetime-local" id="fecha" required class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-stone-600 bg-white dark:bg-stone-900 dark:text-white focus:ring-2 focus:ring-brand-accent focus:outline-none text-sm">
+          </div>
+        </div>
+
+        <button type="submit" class="w-full bg-brand-accent dark:bg-amber-600 text-white font-bold py-3 rounded-lg hover:bg-orange-700 dark:hover:bg-amber-500 transition-colors shadow-md mt-4">
+          Confirmar Reserva
+        </button>
+      </form>
+
+      <div id="mensajeReserva" class="hidden mt-4 p-4 bg-green-100 dark:bg-green-900/40 border border-green-400 dark:border-green-600 text-green-800 dark:text-green-200 rounded-lg text-center font-medium"></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-brand-dark dark:bg-stone-950 text-white mt-auto py-10 transition-colors">
+    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-8 text-sm">
+      <div class="space-y-3">
+        <div class="flex items-center gap-2.5">
+          <div class="p-1.5 bg-stone-800 rounded-lg text-brand-accent dark:text-amber-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 1v3M10 1v3M14 1v3"></path>
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <h4 class="font-bold text-lg text-white leading-tight">Aroma & Grano</h4>
+            <span class="text-[9px] tracking-widest uppercase font-semibold text-amber-400 -mt-0.5">JEHOVA JIREH</span>
+          </div>
+        </div>
+        <p class="text-stone-300 leading-relaxed">Tu punto de encuentro para el buen café y la máxima concentración.</p>
+      </div>
+
+      <div class="space-y-2">
+        <h4 class="font-bold text-base text-white mb-3 border-b border-stone-700 pb-1 w-max">Horarios & Ubicación</h4>
+        <p class="text-stone-300 flex items-center gap-2">
+          <svg class="w-4 h-4 text-brand-accent dark:text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span>Lun - Sáb: 7:00 AM - 8:00 PM</span>
+        </p>
+        <p class="text-stone-300 flex items-center gap-2">
+          <svg class="w-4 h-4 text-brand-accent dark:text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+          <span>Santo Domingo, República Dominicana</span>
+        </p>
+      </div>
+
+      <div class="space-y-2">
+        <h4 class="font-bold text-base text-white mb-3 border-b border-stone-700 pb-1 w-max">Contacto Directo</h4>
+        <p class="text-stone-300">📱 WhatsApp: +1 (809) 303-1738</p>
+        <p class="text-stone-300">💻 Desarrollado por Domingo Feliz (@dofepro)</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BOTÓN IR ARRIBA -->
+<button 
+  id="backToTop" 
+  onclick="scrollToTop()" 
+  class="hidden fixed bottom-6 right-6 z-40 bg-amber-600 hover:bg-amber-700 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center text-xl font-bold transition-all duration-300"
+  aria-label="Volver arriba"
+>
+  ↑
+</button>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
