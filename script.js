@@ -69,6 +69,7 @@ function renderizarProyectos(lista) {
     card.innerHTML = `
       <div class="glow-card-content bg-white dark:bg-slate-900 p-6 flex flex-col justify-between transition-colors shadow-lg dark:shadow-none rounded-2xl border border-slate-200 dark:border-slate-800">
         <div>
+          ${p.imagen ? `<img src="${p.imagen}" alt="Vista previa de ${p.titulo}" class="mb-5 aspect-video w-full rounded-xl border border-slate-200 object-cover object-top shadow-sm dark:border-slate-800" loading="lazy">` : ''}
           <div class="flex items-center justify-between mb-4">
             <span class="text-3xl p-2.5 bg-slate-100 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700/50 group-hover:scale-110 transition-transform" aria-hidden="true">${p.icono}</span>
             <span class="text-[10px] uppercase font-extrabold tracking-wider bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20 px-3 py-1 rounded-full shadow-xs">
