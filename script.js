@@ -1,5 +1,6 @@
 // El catálogo se mantiene en proyectos-data.js para facilitar altas de proyectos.
 const misProyectos = window.misProyectos || [];
+const API_URL = 'https://dofepro-backend.onrender.com';
 
 // 1. GESTIÓN DEL MODO CLARO / OSCURO
 function inicializarTema() {
@@ -221,7 +222,7 @@ function inicializarFormularioContacto() {
     };
 
     try {
-      const respuesta = await fetch('https://dofepro-backend.onrender.com/api/contacto', {
+      const respuesta = await fetch(`${API_URL}/api/contacto`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datos)
@@ -244,6 +245,68 @@ function inicializarFormularioContacto() {
       btnSubmit.disabled = false;
     }
   });
+}
+
+function inicializarResenas() {
+  const form = document.getElementById('formResena');
+  const lista = document.getElementById('listaResenas');
+  const promedio = document.getElementById('promedioResenas');
+  const total = document.getElementById('totalResenas');
+  const estado = document.getElementById('estadoResena');
+  if (!form || !lista || !promedio || !total || !estado) return;
+
+  const cargar = async () => {
+    try {
+      const respuesta = await fetch(`${API_URL}/api/resenas`);
+      if (!respuesta.ok) throw new Error('Servicio no disponible');
+      const datos = await respuesta.json();
+      promedio.textContent = datos.promedio ? `${datos.promedio}/5` : '—';
+      total.textContent = datos.total;
+      lista.replaceChildren();
+      if (!datos.resenas.length) {
+        lista.textContent = 'Aún no hay reseñas publicadas.';
+        return;
+      }
+      datos.resenas.forEach((resena) => {
+        const articulo = document.createElement('article');
+        articulo.className = 'border-b border-slate-100 pb-4 last:border-0 dark:border-slate-800';
+        const titulo = document.createElement('div');
+        titulo.className = 'flex items-center justify-between gap-3';
+        const nombre = document.createElement('strong');
+        nombre.className = 'text-sm text-slate-800 dark:text-slate-200';
+        nombre.textContent = resena.nombre;
+        const estrellas = document.createElement('span');
+        estrellas.className = 'text-sm text-amber-400';
+        estrellas.textContent = '★'.repeat(resena.puntuacion);
+        const comentario = document.createElement('p');
+        comentario.className = 'mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400';
+        comentario.textContent = resena.comentario;
+        titulo.append(nombre, estrellas);
+        articulo.append(titulo, comentario);
+        lista.append(articulo);
+      });
+    } catch (_) {
+      lista.textContent = 'Las reseñas estarán disponibles pronto.';
+    }
+  };
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const boton = form.querySelector('button[type="submit"]');
+    boton.disabled = true;
+    estado.textContent = 'Enviando reseña…';
+    try {
+      const respuesta = await fetch(`${API_URL}/api/resenas`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(Object.fromEntries(new FormData(form))) });
+      if (!respuesta.ok) throw new Error();
+      form.reset();
+      estado.textContent = '¡Gracias! Tu reseña se publicará después de ser revisada.';
+    } catch (_) {
+      estado.textContent = 'No se pudo enviar por ahora. Inténtalo más tarde.';
+    } finally { boton.disabled = false; }
+  });
+
+  cargar();
+  window.setInterval(cargar, 30000);
 }
 
 // APERTURA / CIERRE DEL MODAL DE CONTACTO
@@ -341,5 +404,6 @@ document.addEventListener('DOMContentLoaded', () => {
   inicializarScrollTop();
   inicializarParticulas();
   inicializarFormularioContacto();
+  inicializarResenas();
   inicializarMenuMovil();
 });

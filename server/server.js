@@ -33,6 +33,17 @@ app.use(cors({
 
 app.use(express.json());
 
+const intentosResena = new Map();
+const permitirResena = (ip) => {
+  const ahora = Date.now();
+  const registro = intentosResena.get(ip) || [];
+  const recientes = registro.filter((tiempo) => ahora - tiempo < 60 * 60 * 1000);
+  if (recientes.length >= 3) return false;
+  recientes.push(ahora);
+  intentosResena.set(ip, recientes);
+  return true;
+};
+
 // Ruta de prueba
 app.get('/', (req, res) => {
   res.send('🚀 Servidor de API funcionando correctamente.');
@@ -106,4 +117,35 @@ app.post('/api/contacto', async (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`🌐 Servidor corriendo en http://localhost:${PORT}`);
+});
+
+app.get('/api/resenas', async (_req, res) => {
+  try {
+    const url = `${process.env.SUPABASE_URL}/rest/v1/resenas?estado=eq.aprobada&select=nombre,comentario,puntuacion,created_at&order=created_at.desc`;
+    const respuesta = await fetch(url, { headers: { apikey: process.env.SUPABASE_KEY, Authorization: `Bearer ${process.env.SUPABASE_KEY}` } });
+    if (!respuesta.ok) throw new Error(await respuesta.text());
+    const todasLasResenas = await respuesta.json();
+    const total = todasLasResenas.length;
+    const promedio = total ? (todasLasResenas.reduce((suma, item) => suma + item.puntuacion, 0) / total).toFixed(1) : null;
+    res.json({ resenas: todasLasResenas.slice(0, 6), total, promedio });
+  } catch (error) {
+    console.error('Error al obtener reseñas:', error.message);
+    res.status(503).json({ error: 'Reseñas no disponibles.' });
+  }
+});
+
+app.post('/api/resenas', async (req, res) => {
+  const nombre = String(req.body.nombre || '').trim();
+  const comentario = String(req.body.comentario || '').trim();
+  const puntuacion = Number(req.body.puntuacion);
+  if (nombre.length < 2 || nombre.length > 80 || comentario.length < 10 || comentario.length > 600 || !Number.isInteger(puntuacion) || puntuacion < 1 || puntuacion > 5) return res.status(400).json({ error: 'Datos de reseña no válidos.' });
+  if (!permitirResena(req.ip)) return res.status(429).json({ error: 'Intenta nuevamente más tarde.' });
+  try {
+    const respuesta = await fetch(`${process.env.SUPABASE_URL}/rest/v1/resenas`, { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: process.env.SUPABASE_KEY, Authorization: `Bearer ${process.env.SUPABASE_KEY}`, Prefer: 'return=minimal' }, body: JSON.stringify({ nombre, comentario, puntuacion, estado: 'pendiente' }) });
+    if (!respuesta.ok) throw new Error(await respuesta.text());
+    res.status(201).json({ exito: true });
+  } catch (error) {
+    console.error('Error al guardar reseña:', error.message);
+    res.status(503).json({ error: 'No se pudo guardar la reseña.' });
+  }
 });
