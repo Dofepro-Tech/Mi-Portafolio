@@ -31,6 +31,7 @@ function inicializarTema() {
   if (!btnTheme) return;
 
   const aplicarIconos = (isDark) => {
+    btnTheme.setAttribute('aria-pressed', String(isDark));
     if (iconSun && iconMoon) {
       if (isDark) {
         iconSun.classList.remove('hidden');
@@ -54,12 +55,12 @@ function inicializarTema() {
   }
 
   // Evento Clic
-  btnTheme.onclick = (e) => {
+  btnTheme.addEventListener('click', (e) => {
     e.preventDefault();
     const isDark = document.documentElement.classList.toggle('dark');
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
     aplicarIconos(isDark);
-  };
+  });
 }
 
 // Actualiza el contador de proyectos
