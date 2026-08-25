@@ -1,26 +1,5 @@
-// LISTA DE PROYECTOS
-const misProyectos = [
-  {
-    id: "aroma-grano",
-    titulo: "Aroma & Grano",
-    categoria: "web",
-    descripcion: "Sitio web interactivo para cafetería de especialidad con carrito de compras, pedidos por WhatsApp, reserva de mesas y comentarios con guardado local.",
-    icono: "☕",
-    tags: ["HTML5", "Tailwind CSS", "JavaScript"],
-    demoUrl: "./proyectos/aroma-y-grano/index.html",
-    destacado: true
-  },
-  {
-    id: "florecer",
-    titulo: "Florecer",
-    categoria: "landing",
-    descripcion: "Página de aterrizaje optimizada para conversión de clientes e integración con formularios.",
-    icono: "🚀",
-    tags: ["HTML5", "Tailwind CSS", "JavaScript"],
-    demoUrl: "./proyectos/floristeria-florecer/index.html",
-    destacado: true
-  }
-];
+// El catálogo se mantiene en proyectos-data.js para facilitar altas de proyectos.
+const misProyectos = window.misProyectos || [];
 
 // 1. GESTIÓN DEL MODO CLARO / OSCURO
 function inicializarTema() {
@@ -170,6 +149,8 @@ function inicializarScrollTop() {
 
 // SISTEMA DE PARTÍCULAS EN CANVAS
 function inicializarParticulas() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
   const canvas = document.getElementById('particlesCanvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
@@ -182,7 +163,7 @@ function inicializarParticulas() {
     height = canvas.height = window.innerHeight;
   });
 
-  const numParticles = 45;
+  const numParticles = window.innerWidth < 640 ? 18 : 45;
   const particles = Array.from({ length: numParticles }, () => ({
     x: Math.random() * width,
     y: Math.random() * height,

@@ -3,18 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>mi Portafolio | Domingo Feliz (@dofepro)</title>
-  
-  <!-- 1. Configuración obligatoria para el Modo Oscuro por clases -->
-  <!-- 2. CDN oficial de Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Portafolio | Domingo Feliz (@dofepro)</title>
+  <meta name="description" content="Portafolio de Domingo Feliz (@dofepro): desarrollo de aplicaciones web, landing pages y soluciones digitales rápidas, accesibles y modernas.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://dofepro.do/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_DO">
+  <meta property="og:url" content="https://dofepro.do/">
+  <meta property="og:title" content="Portafolio | Domingo Feliz (@dofepro)">
+  <meta property="og:description" content="Aplicaciones web, landing pages y soluciones digitales rápidas, accesibles y modernas.">
+  <meta property="og:site_name" content="DofeproTech">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Portafolio | Domingo Feliz (@dofepro)">
+  <meta name="twitter:description" content="Aplicaciones web, landing pages y soluciones digitales rápidas, accesibles y modernas.">
   <script>
-    tailwind.config = {
-      darkMode: 'class'
-    };
+    try {
+      const tema = localStorage.getItem('theme');
+      if (tema === 'dark' || (!tema && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      }
+    } catch (_) {}
   </script>
 
-  <!-- CSS Personalizado -->
+  <!-- CSS compilado para producción y estilos propios -->
+  <link rel="stylesheet" href="./dist/output.css">
   <link rel="stylesheet" href="./styles.css">
   
   <!-- Google Fonts -->
@@ -581,6 +593,7 @@
   </svg>
 </button>
 
+  <script src="proyectos-data.js"></script>
   <script src="script.js"></script>
 
 
@@ -604,7 +617,7 @@
     <h2 class="text-2xl font-black text-white mb-6">Formulario de Contacto</h2>
 
     <!-- Formulario -->
-    <form action="https://formspree.io/f/TU_FORM_ID" method="POST" class="space-y-4">
+    <form class="space-y-4">
       <div>
         <label for="nombre" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Nombre completo</label>
         <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre" 
@@ -634,6 +647,9 @@
         🚀 Enviar Mensaje
       </button>
     </form>
+    <noscript>
+      <p class="mt-4 text-center text-sm text-slate-400">Activa JavaScript o <a class="text-sky-400 underline" href="https://wa.me/18093031738">escríbeme por WhatsApp</a>.</p>
+    </noscript>
   </div>
 </dialog>
   
