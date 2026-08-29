@@ -30,7 +30,7 @@ window.misProyectos = [
     descripcion: 'App móvil (Flutter) para gestión de barberías: autenticación con Supabase (email, Google y Apple), roles de usuario y tema oscuro premium con acentos dorados.',
     icono: '💈',
     tags: ['Flutter', 'Dart', 'Supabase'],
-    demoUrl: 'https://github.com/Dofepro-Tech/barberpro',
+    demoUrl: 'https://dofepro-tech.github.io/barberpro/',
     destacado: true
   }
 ];
