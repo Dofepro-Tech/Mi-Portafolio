@@ -22,5 +22,15 @@ window.misProyectos = [
     tags: ['HTML5', 'Tailwind CSS', 'JavaScript'],
     demoUrl: './proyectos/floristeria-florecer/index.html',
     destacado: true
+  },
+  {
+    id: 'barberpro',
+    titulo: 'BarberOS',
+    categoria: 'app',
+    descripcion: 'App móvil (Flutter) para gestión de barberías: autenticación con Supabase (email, Google y Apple), roles de usuario y tema oscuro premium con acentos dorados.',
+    icono: '💈',
+    tags: ['Flutter', 'Dart', 'Supabase'],
+    demoUrl: 'https://github.com/Dofepro-Tech/barberpro',
+    destacado: true
   }
 ];
