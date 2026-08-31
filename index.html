@@ -398,27 +398,33 @@
           <p class="text-sm text-slate-500 dark:text-slate-400">Aún no hay reseñas publicadas.</p>
         </div>
       </div>
+
       <form id="formResena" class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 space-y-4">
-        <div>
-          <label for="nombreResena" class="block text-sm font-bold text-slate-800 dark:text-slate-200">Tu nombre</label>
-          <input id="nombreResena" name="nombre" required maxlength="80" class="mt-1.5 w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-sky-500 dark:border-slate-700 dark:bg-slate-950 dark:text-white" placeholder="Ej. María R.">
-        </div>
-        <fieldset>
-          <legend class="text-sm font-bold text-slate-800 dark:text-slate-200">Tu valoración</legend>
-          <div class="mt-2 flex gap-2" aria-label="Selecciona de 1 a 5 estrellas">
-            <label class="sr-only" for="puntuacionResena">Puntuación</label>
-            <select id="puntuacionResena" name="puntuacion" class="rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-900 dark:border-slate-700 dark:bg-slate-950 dark:text-white">
-              <option value="5">★★★★★ — Excelente</option><option value="4">★★★★ — Muy bueno</option><option value="3">★★★ — Bueno</option><option value="2">★★ — Regular</option><option value="1">★ — Mejorable</option>
-            </select>
-          </div>
-        </fieldset>
-        <div>
-          <label for="comentarioResena" class="block text-sm font-bold text-slate-800 dark:text-slate-200">Comentario</label>
-          <textarea id="comentarioResena" name="comentario" required minlength="10" maxlength="600" rows="4" class="mt-1.5 w-full resize-none rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-sky-500 dark:border-slate-700 dark:bg-slate-950 dark:text-white" placeholder="Cuéntame cómo fue tu experiencia."></textarea>
-        </div>
-        <button type="submit" class="button-primary w-full justify-center px-5 py-3 text-sm">Enviar reseña</button>
-        <p id="estadoResena" class="text-center text-xs text-slate-500 dark:text-slate-400" role="status"></p>
-      </form>
+  <div>
+    <label for="nombreResena" class="block text-sm font-bold text-slate-800 dark:text-slate-200">Tu nombre</label>
+    <input id="nombreResena" name="nombre" required maxlength="80" class="mt-1.5 w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-sky-500 dark:border-slate-700 dark:bg-slate-950 dark:text-white" placeholder="Ej. María R.">
+  </div>
+  <fieldset>
+    <legend class="text-sm font-bold text-slate-800 dark:text-slate-200">Tu valoración</legend>
+    <div class="mt-2 flex gap-2" aria-label="Selecciona de 1 a 5 estrellas">
+      <label class="sr-only" for="puntuacionResena">Puntuación</label>
+      <select id="puntuacionResena" name="puntuacion" class="rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-900 dark:border-slate-700 dark:bg-slate-950 dark:text-white">
+        <option value="5">★★★★★ — Excelente</option>
+        <option value="4">★★★★ — Muy bueno</option>
+        <option value="3">★★★ — Bueno</option>
+        <option value="2">★★ — Regular</option>
+        <option value="1">★ — Mejorable</option>
+      </select>
+    </div>
+  </fieldset>
+  <div>
+    <label for="comentarioResena" class="block text-sm font-bold text-slate-800 dark:text-slate-200">Comentario</label>
+    <textarea id="comentarioResena" name="comentario" required minlength="10" maxlength="600" rows="4" class="mt-1.5 w-full resize-none rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-sky-500 dark:border-slate-700 dark:bg-slate-950 dark:text-white" placeholder="Cuéntame cómo fue tu experiencia."></textarea>
+  </div>
+  <button type="submit" class="button-primary w-full justify-center px-5 py-3 text-sm">Enviar reseña</button>
+  <p id="estadoResena" class="text-center text-xs text-slate-500 dark:text-slate-400" role="status"></p>
+</form>
+
     </div>
   </section>
 

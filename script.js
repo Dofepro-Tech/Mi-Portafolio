@@ -1,4 +1,8 @@
-// El catálogo se mantiene en proyectos-data.js para facilitar altas de proyectos.
+/**
+ * script.js - Lógica principal del portafolio frontend (Dofepro-Tech)
+ * Conexión completa con la API backend en Render para contacto y sistema de reseñas en Supabase.
+ */
+
 const misProyectos = window.misProyectos || [];
 const API_URL = 'https://dofepro-backend.onrender.com';
 
@@ -34,7 +38,6 @@ function inicializarTema() {
     aplicarIconos(false);
   }
 
-  // Evento Clic
   btnTheme.addEventListener('click', (e) => {
     e.preventDefault();
     const isDark = document.documentElement.classList.toggle('dark');
@@ -43,7 +46,7 @@ function inicializarTema() {
   });
 }
 
-// Actualiza el contador de proyectos
+// ACTUALIZAR CONTADOR DE PROYECTOS
 function actualizarContadorProyectos() {
   const contadorElemento = document.getElementById('contador-proyectos');
   if (contadorElemento) {
@@ -68,7 +71,7 @@ function renderizarProyectos(lista) {
     card.className = "glow-card-container group";
     
     card.innerHTML = `
-      <div class="glow-card-content bg-white dark:bg-slate-900 p-6 flex flex-col justify-between transition-colors shadow-lg dark:shadow-none rounded-2xl border border-slate-200 dark:border-slate-800">
+      <div class="glow-card-content bg-white dark:bg-slate-900 p-6 flex flex-col justify-between transition-colors shadow-lg dark:shadow-none rounded-2xl border border-slate-200 dark:border-slate-800 h-full">
         <div>
           ${p.imagen ? `<img src="${p.imagen}" alt="Vista previa de ${p.titulo}" class="mb-5 aspect-video w-full rounded-xl border border-slate-200 object-cover object-top shadow-sm dark:border-slate-800" loading="lazy">` : ''}
           <div class="flex items-center justify-between mb-4">
@@ -96,7 +99,7 @@ function renderizarProyectos(lista) {
   });
 }
 
-// INICIALIZAR EVENTOS EN BOTONES DE FILTRO
+// BOTONES DE FILTRO DE PROYECTOS
 function inicializarFiltros() {
   const botonesFiltro = document.querySelectorAll('.filtro-btn');
   
@@ -149,7 +152,7 @@ function inicializarScrollTop() {
   });
 }
 
-// SISTEMA DE PARTÍCULAS EN CANVAS
+// SISTEMA DE PARTÍCULAS CANVAS
 function inicializarParticulas() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
@@ -201,7 +204,7 @@ function inicializarParticulas() {
   animate();
 }
 
-// CONEXIÓN DEL FORMULARIO CON LA API
+// CONEXIÓN DEL FORMULARIO DE CONTACTO CON LA API
 function inicializarFormularioContacto() {
   const formContacto = document.querySelector('#modalContacto form');
   if (!formContacto) return;
@@ -248,6 +251,7 @@ function inicializarFormularioContacto() {
   });
 }
 
+// GESTIÓN DEL SISTEMA DE RESEÑAS CON SINCRO PERFECTA DE IDs Y CAMPOS
 function inicializarResenas() {
   const form = document.getElementById('formResena');
   const lista = document.getElementById('listaResenas');
@@ -255,14 +259,19 @@ function inicializarResenas() {
   const total = document.getElementById('totalResenas');
   const estado = document.getElementById('estadoResena');
   const boton = form?.querySelector('button[type="submit"]');
+
   if (!form || !lista || !promedio || !total || !estado) return;
 
   const actualizarEstadoApi = (disponible) => {
-    boton.disabled = !disponible;
-    boton.setAttribute('aria-disabled', String(!disponible));
+    if (boton) {
+      boton.disabled = !disponible;
+      boton.setAttribute('aria-disabled', String(!disponible));
+    }
     if (!disponible) {
-      estado.className = 'text-center text-xs text-rose-600 dark:text-rose-400';
+      estado.className = 'text-center text-xs text-rose-600 dark:text-rose-400 font-medium mt-2';
       estado.textContent = 'El servicio de reseñas no está disponible. Inténtalo más tarde.';
+    } else if (estado.textContent === 'El servicio de reseñas no está disponible. Inténtalo más tarde.') {
+      estado.textContent = '';
     }
   };
 
@@ -272,29 +281,38 @@ function inicializarResenas() {
     try {
       const respuesta = await fetch(`${API_URL}/api/resenas`, { signal: controlador.signal });
       if (!respuesta.ok) throw new Error('Servicio no disponible');
+
       const datos = await respuesta.json();
       actualizarEstadoApi(true);
-      promedio.textContent = datos.promedio ? `${datos.promedio}/5` : '—';
-      total.textContent = datos.total;
+
+      promedio.textContent = datos.promedio ? `${datos.promedio}/5` : '0/5';
+      total.textContent = datos.total !== undefined ? datos.total : 0;
       lista.replaceChildren();
-      if (!datos.resenas.length) {
+
+      if (!datos.resenas || !datos.resenas.length) {
         lista.textContent = 'Aún no hay reseñas publicadas.';
         return;
       }
+
       datos.resenas.forEach((resena) => {
         const articulo = document.createElement('article');
-        articulo.className = 'border-b border-slate-100 pb-4 last:border-0 dark:border-slate-800';
+        articulo.className = 'border-b border-slate-100 pb-4 last:border-0 dark:border-slate-800 transition-colors';
+
         const titulo = document.createElement('div');
         titulo.className = 'flex items-center justify-between gap-3';
+
         const nombre = document.createElement('strong');
-        nombre.className = 'text-sm text-slate-800 dark:text-slate-200';
+        nombre.className = 'text-sm font-semibold text-slate-800 dark:text-slate-200';
         nombre.textContent = resena.nombre;
+
         const estrellas = document.createElement('span');
-        estrellas.className = 'text-sm text-amber-400';
-        estrellas.textContent = '★'.repeat(resena.puntuacion);
+        estrellas.className = 'text-sm text-amber-400 font-mono tracking-widest';
+        estrellas.textContent = '★'.repeat(resena.puntuacion || 5);
+
         const comentario = document.createElement('p');
         comentario.className = 'mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400';
         comentario.textContent = resena.comentario;
+
         titulo.append(nombre, estrellas);
         articulo.append(titulo, comentario);
         lista.append(articulo);
@@ -312,24 +330,43 @@ function inicializarResenas() {
     const textoOriginal = boton.textContent;
     const controlador = new AbortController();
     const timeout = window.setTimeout(() => controlador.abort(), 15000);
+
     boton.disabled = true;
     boton.textContent = 'Enviando reseña...';
-    estado.className = 'text-center text-xs text-slate-500 dark:text-slate-400';
+    estado.className = 'text-center text-xs text-slate-500 dark:text-slate-400 font-medium mt-2';
     estado.textContent = 'Enviando reseña…';
+
+    const formData = new FormData(form);
+    const payload = {
+      nombre: String(formData.get('nombre') || '').trim(),
+      comentario: String(formData.get('comentario') || '').trim(),
+      puntuacion: parseInt(formData.get('puntuacion') || 5, 10)
+    };
+
     try {
       const respuesta = await fetch(`${API_URL}/api/resenas`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+        body: JSON.stringify(payload),
         signal: controlador.signal
       });
+
       const resultado = await respuesta.json().catch(() => ({}));
       if (!respuesta.ok) throw new Error(resultado.error || 'No se pudo enviar la reseña.');
+
       form.reset();
-      estado.className = 'text-center text-xs text-emerald-600 dark:text-emerald-400';
-      estado.textContent = '¡Gracias! Tu reseña se publicará después de ser revisada.';
+      
+      // Si la IA aprobó la reseña, recarga la lista inmediatamente
+      if (resultado.mensaje && resultado.mensaje.includes('publicada')) {
+        estado.className = 'text-center text-xs text-emerald-600 dark:text-emerald-400 font-medium mt-2';
+        estado.textContent = '¡Gracias! Tu reseña ha sido publicada.';
+        cargar(); 
+      } else {
+        estado.className = 'text-center text-xs text-emerald-600 dark:text-emerald-400 font-medium mt-2';
+        estado.textContent = '¡Gracias! Tu reseña se publicará después de ser revisada.';
+      }
     } catch (error) {
-      estado.className = 'text-center text-xs text-rose-600 dark:text-rose-400';
+      estado.className = 'text-center text-xs text-rose-600 dark:text-rose-400 font-medium mt-2';
       estado.textContent = error.name === 'AbortError'
         ? 'El servidor tardó demasiado. Inténtalo nuevamente.'
         : (error.message || 'No se pudo enviar por ahora. Inténtalo más tarde.');
@@ -344,7 +381,7 @@ function inicializarResenas() {
   window.setInterval(cargar, 30000);
 }
 
-// APERTURA / CIERRE DEL MODAL DE CONTACTO
+// APERTURA Y CIERRE DE MODAL
 function toggleContactoModal() {
   const modal = document.getElementById('modalContacto');
   const content = document.getElementById('modalContactoContent');
@@ -368,7 +405,7 @@ function toggleContactoModal() {
   }
 }
 
-// CONTROL DEL MENÚ HAMBURGUESA MÓVIL
+// CONTROL MENÚ MÓVIL
 function inicializarMenuMovil() {
   const btnMenuMovil = document.getElementById('btnMenuMovil');
   const menuMovil = document.getElementById('menuMovil');
@@ -379,7 +416,7 @@ function inicializarMenuMovil() {
 
   const toggleMenu = () => {
     const isHidden = menuMovil.classList.toggle('hidden');
-    
+
     if (iconMenuOpen && iconMenuClose) {
       iconMenuOpen.classList.toggle('hidden', !isHidden);
       iconMenuClose.classList.toggle('hidden', isHidden);
@@ -414,7 +451,7 @@ function inicializarMenuMovil() {
   });
 }
 
-// EVENTOS GLOBALES DE CIERRE DEL MODAL
+// EVENTOS GLOBALES DE ESC Y CLICK OUTSIDE
 document.getElementById('modalContacto')?.addEventListener('click', (e) => {
   if (e.target === e.currentTarget) {
     toggleContactoModal();
@@ -430,7 +467,7 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// PUNTO DE ENTRADA ÚNICO
+// INICIALIZACIÓN GENERAL
 document.addEventListener('DOMContentLoaded', () => {
   inicializarTema();
   renderizarProyectos(misProyectos);
