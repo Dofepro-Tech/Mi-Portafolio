@@ -33,5 +33,27 @@ window.misProyectos = [
     tags: ['Flutter', 'Dart', 'Supabase'],
     demoUrl: 'https://dofepro-tech.github.io/barberpro/',
     destacado: true
+  },
+  {
+    id: 'biblia-dj',
+    titulo: 'Bíblia DJ',
+    categoria: 'app',
+    descripcion: 'App de lectura y estudio bíblico con backend en Express, estudio guiado con IA, retos diarios y empaquetado para Android con Capacitor.',
+    icono: '📖',
+    imagen: './assets/proyectos/biblia-dj.png',
+    tags: ['React', 'TypeScript', 'Capacitor'],
+    demoUrl: 'https://dofepro-tech.github.io/biblia-dj/',
+    destacado: true
+  },
+  {
+    id: 'cambiar-imagen',
+    titulo: 'Cambiar Imagen',
+    categoria: 'web',
+    descripcion: 'Herramienta web para comprimir y convertir imágenes directamente en el navegador, sin backend ni claves API.',
+    icono: '🖼️',
+    imagen: './assets/proyectos/cambiar-imagen.png',
+    tags: ['React', 'Vite', 'Cloudflare Workers'],
+    demoUrl: 'https://cambiar-imagen.dofeprotech.workers.dev/',
+    destacado: false
   }
 ];
