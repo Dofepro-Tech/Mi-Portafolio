@@ -66,3 +66,4 @@ Este proyecto se distribuye bajo la [licencia MIT](LICENSE).
 
 - GitHub: [@dofepro](https://github.com/dofepro)
 - LinkedIn: [Domingo Feliz](https://www.linkedin.com/in/domingo-feliz-dofepro-tech)
+- Correo: [elsonidistaadnj@gmail.com](mailto:elsonidistaadnj@gmail.com)
