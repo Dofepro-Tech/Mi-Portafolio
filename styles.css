@@ -127,6 +127,26 @@
   display: inline-block;
 }
 
+.whatsapp-icon {
+  fill: #25d366;
+}
+
+.btn-whatsapp-text::after,
+.btn-cta-text::after {
+  content: "Chatear";
+}
+
+.glow-btn-content:hover .btn-whatsapp-text,
+.glow-btn-content:hover .btn-cta-text {
+  font-size: 0;
+}
+
+.glow-btn-content:hover .btn-whatsapp-text::after,
+.glow-btn-content:hover .btn-cta-text::after {
+  content: "Chatea con nosotros";
+  font-size: 0.875rem;
+}
+
 /* ==========================================================================
    ANIMACIONES DE ENCABEZADO Y BADGE
    ========================================================================== */
@@ -163,17 +183,13 @@
    BORDE CON COLORES GIRANDO (ANIMATED GRADIENT BORDER)
    ========================================================================== */
 
-/* Registro de la propiedad personalizada para rotar en CSS */
-@property --angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
 /* Animación de rotación continua 360 grados */
 @keyframes spinBorder {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
   to {
-    --angle: 360deg;
+    transform: translate(-50%, -50%) rotate(360deg);
   }
 }
 
@@ -183,11 +199,9 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  translate: -50% -50%;
   width: 200%;
   height: 500%;
   background-image: conic-gradient(
-    from var(--angle),
     #38bdf8, /* Sky 400 */
     #818cf8, /* Indigo 400 */
     #c084fc, /* Purple 400 */

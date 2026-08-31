@@ -1,26 +1,32 @@
 {
   "dependencies": {
-    "@supabase/supabase-js": "^2.112.4",
-    "@tailwindcss/vite": "^4.3.3",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "node-fetch": "^3.3.2",
     "resend": "^6.22.0"
   },
   "name": "portafolio",
   "version": "1.0.0",
-  "description": "<div align=\"center\">",
+  "description": "Portafolio de DofeproTech con proyectos filtrables, tema claro u oscuro, contacto por correo o WhatsApp y reseñas moderadas.",
   "main": "script.js",
   "devDependencies": {
     "tailwindcss": "^4.3.3"
   },
   "scripts": {
     "dev": "npx @tailwindcss/cli -i ./src/input.css -o ./dist/output.css --watch",
-    "build": "npx @tailwindcss/cli -i ./src/input.css -o ./dist/output.css --minify"
+    "build": "npx @tailwindcss/cli -i ./src/input.css -o ./dist/output.css --minify",
+    "start": "node server/server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "portafolio",
+    "html",
+    "tailwindcss",
+    "express"
+  ],
+  "author": "Domingo Feliz (DofeproTech)",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
   "type": "commonjs"
 }

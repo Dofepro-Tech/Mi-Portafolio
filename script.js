@@ -218,6 +218,7 @@ function inicializarFormularioContacto() {
     const datos = {
       nombre: document.getElementById('nombre').value,
       email: document.getElementById('email').value,
+      asunto: document.getElementById('asunto').value,
       mensaje: document.getElementById('mensaje').value
     };
 
@@ -253,13 +254,26 @@ function inicializarResenas() {
   const promedio = document.getElementById('promedioResenas');
   const total = document.getElementById('totalResenas');
   const estado = document.getElementById('estadoResena');
+  const boton = form?.querySelector('button[type="submit"]');
   if (!form || !lista || !promedio || !total || !estado) return;
 
+  const actualizarEstadoApi = (disponible) => {
+    boton.disabled = !disponible;
+    boton.setAttribute('aria-disabled', String(!disponible));
+    if (!disponible) {
+      estado.className = 'text-center text-xs text-rose-600 dark:text-rose-400';
+      estado.textContent = 'El servicio de reseñas no está disponible. Inténtalo más tarde.';
+    }
+  };
+
   const cargar = async () => {
+    const controlador = new AbortController();
+    const timeout = window.setTimeout(() => controlador.abort(), 10000);
     try {
-      const respuesta = await fetch(`${API_URL}/api/resenas`);
+      const respuesta = await fetch(`${API_URL}/api/resenas`, { signal: controlador.signal });
       if (!respuesta.ok) throw new Error('Servicio no disponible');
       const datos = await respuesta.json();
+      actualizarEstadoApi(true);
       promedio.textContent = datos.promedio ? `${datos.promedio}/5` : '—';
       total.textContent = datos.total;
       lista.replaceChildren();
@@ -286,23 +300,44 @@ function inicializarResenas() {
         lista.append(articulo);
       });
     } catch (_) {
+      actualizarEstadoApi(false);
       lista.textContent = 'Las reseñas estarán disponibles pronto.';
+    } finally {
+      window.clearTimeout(timeout);
     }
   };
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const boton = form.querySelector('button[type="submit"]');
+    const textoOriginal = boton.textContent;
+    const controlador = new AbortController();
+    const timeout = window.setTimeout(() => controlador.abort(), 15000);
     boton.disabled = true;
+    boton.textContent = 'Enviando reseña...';
+    estado.className = 'text-center text-xs text-slate-500 dark:text-slate-400';
     estado.textContent = 'Enviando reseña…';
     try {
-      const respuesta = await fetch(`${API_URL}/api/resenas`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(Object.fromEntries(new FormData(form))) });
-      if (!respuesta.ok) throw new Error();
+      const respuesta = await fetch(`${API_URL}/api/resenas`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+        signal: controlador.signal
+      });
+      const resultado = await respuesta.json().catch(() => ({}));
+      if (!respuesta.ok) throw new Error(resultado.error || 'No se pudo enviar la reseña.');
       form.reset();
+      estado.className = 'text-center text-xs text-emerald-600 dark:text-emerald-400';
       estado.textContent = '¡Gracias! Tu reseña se publicará después de ser revisada.';
-    } catch (_) {
-      estado.textContent = 'No se pudo enviar por ahora. Inténtalo más tarde.';
-    } finally { boton.disabled = false; }
+    } catch (error) {
+      estado.className = 'text-center text-xs text-rose-600 dark:text-rose-400';
+      estado.textContent = error.name === 'AbortError'
+        ? 'El servidor tardó demasiado. Inténtalo nuevamente.'
+        : (error.message || 'No se pudo enviar por ahora. Inténtalo más tarde.');
+    } finally {
+      window.clearTimeout(timeout);
+      boton.disabled = false;
+      boton.textContent = textoOriginal;
+    }
   });
 
   cargar();

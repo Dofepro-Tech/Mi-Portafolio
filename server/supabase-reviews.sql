@@ -10,3 +10,7 @@ create table if not exists public.resenas (
 
 create index if not exists resenas_publicadas_fecha_idx
   on public.resenas (estado, created_at desc);
+
+-- Ejecuta esta migración si la tabla mensajes ya existe.
+alter table public.mensajes
+  add column if not exists asunto text;
