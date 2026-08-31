@@ -14,12 +14,9 @@ require('dotenv').config({ path: path.join(__dirname, '.env') });
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY || 're_dummy_key');
 const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-/**
- * Escapa caracteres HTML especiales para prevenir vulnerabilidades XSS.
- */
 function escaparHtml(valor) {
   return valor.replace(/[&<>'"]/g, (caracter) => ({
     '&': '&amp;',
@@ -30,9 +27,6 @@ function escaparHtml(valor) {
   })[caracter]);
 }
 
-/**
- * Envía peticiones HTTP fetch agregando un límite de tiempo de espera (timeout).
- */
 async function fetchConTimeout(url, opciones = {}, timeoutMs = 10000) {
   const controlador = new AbortController();
   const timeout = setTimeout(() => controlador.abort(), timeoutMs);
@@ -46,17 +40,23 @@ async function fetchConTimeout(url, opciones = {}, timeoutMs = 10000) {
 /**
  * Evalúa si un comentario es adecuado para ser publicado usando la API de Gemini.
  * @param {string} comentario 
- * @returns {Promise<boolean>} Devuelve true si es aprobado por la IA, false si es rechazado/pendiente.
+ * @returns {Promise<boolean>}
  */
 async function moderarConIa(comentario) {
   try {
     const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) return false; // Si no hay clave, guarda como pendiente por seguridad
+    if (!apiKey) {
+      console.warn('⚠️ GEMINI_API_KEY no definida. Reseña asignada a pendiente.');
+      return false; 
+    }
 
     const prompt = `Analiza la siguiente reseña para un sitio web de desarrollo. Responde ÚNICAMENTE con la palabra "APROBADO" si el texto es respetuoso, una opinión válida o constructiva. Responde ÚNICAMENTE "RECHAZADO" si contiene insultos, groserías, spam, contenido de odio o carece por completo de sentido.
     Reseña: "${comentario}"`;
 
-    const respuesta = await fetchConTimeout(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+    // Se utiliza el endpoint estático de la API de Gemini
+    const urlApi = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+    const respuesta = await fetchConTimeout(urlApi, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -70,12 +70,11 @@ async function moderarConIa(comentario) {
 
     return resultado === 'APROBADO';
   } catch (error) {
-    console.error('Error durante la moderación con IA:', error.message);
-    return false; // Ante cualquier fallo de red o tiempo de espera, se envía a revisión
+    console.error('⚠️ Fallo en moderación con IA:', error.message);
+    return false; // Si falla la petición a la IA, la reseña se guarda como pendiente de forma segura
   }
 }
 
-// Dominios autorizados para solicitudes CORS
 const origenesPermitidos = [
   'http://127.0.0.1:5500',
   'http://localhost:3000',
@@ -84,7 +83,6 @@ const origenesPermitidos = [
   'https://www.dofepro.do'
 ];
 
-// Configuración de Middlewares
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || origenesPermitidos.indexOf(origin) !== -1) {
@@ -97,7 +95,6 @@ app.use(cors({
 
 app.use(express.json({ limit: '20kb' }));
 
-// Control de tasa de peticiones por IP
 const intentosPorIp = new Map();
 const permitirSolicitud = (ip, limite) => {
   const ahora = Date.now();
@@ -109,12 +106,10 @@ const permitirSolicitud = (ip, limite) => {
   return true;
 };
 
-// Ruta de salud
 app.get('/', (req, res) => {
   res.send('🚀 Servidor de API funcionando correctamente.');
 });
 
-// Endpoint: Formulario de contacto
 app.post('/api/contacto', async (req, res) => {
   const nombre = String(req.body.nombre || '').trim();
   const email = String(req.body.email || '').trim();
@@ -152,24 +147,26 @@ app.post('/api/contacto', async (req, res) => {
       throw new Error(`Error Supabase: ${dbError}`);
     }
 
-    await resend.emails.send({
-      from: 'Portafolio <onboarding@resend.dev>',
-      to: process.env.MI_CORREO,
-      replyTo: email,
-      subject: `Nuevo mensaje: ${asunto}`,
-      html: `
-        <div style="font-family: sans-serif; padding: 20px; color: #1e293b; background-color: #f8fafc; border-radius: 8px;">
-          <h2 style="color: #0ea5e9; margin-top: 0;">Tienes un nuevo mensaje de contacto</h2>
-          <p><strong>Nombre:</strong> ${escaparHtml(nombre)}</p>
-          <p><strong>Correo:</strong> ${escaparHtml(email)}</p>
-          <p><strong>Asunto:</strong> ${escaparHtml(asunto)}</p>
-          <p><strong>Mensaje:</strong></p>
-          <blockquote style="background: #ffffff; padding: 15px; border-left: 4px solid #0ea5e9; border-radius: 4px; font-style: italic;">
-            ${escaparHtml(mensaje)}
-          </blockquote>
-        </div>
-      `
-    });
+    if (process.env.RESEND_API_KEY && process.env.MI_CORREO) {
+      await resend.emails.send({
+        from: 'Portafolio <onboarding@resend.dev>',
+        to: process.env.MI_CORREO,
+        replyTo: email,
+        subject: `Nuevo mensaje: ${asunto}`,
+        html: `
+          <div style="font-family: sans-serif; padding: 20px; color: #1e293b; background-color: #f8fafc; border-radius: 8px;">
+            <h2 style="color: #0ea5e9; margin-top: 0;">Tienes un nuevo mensaje de contacto</h2>
+            <p><strong>Nombre:</strong> ${escaparHtml(nombre)}</p>
+            <p><strong>Correo:</strong> ${escaparHtml(email)}</p>
+            <p><strong>Asunto:</strong> ${escaparHtml(asunto)}</p>
+            <p><strong>Mensaje:</strong></p>
+            <blockquote style="background: #ffffff; padding: 15px; border-left: 4px solid #0ea5e9; border-radius: 4px; font-style: italic;">
+              ${escaparHtml(mensaje)}
+            </blockquote>
+          </div>
+        `
+      });
+    }
 
     return res.status(200).json({ exito: true, mensaje: '¡Mensaje guardado y enviado con éxito!' });
 
@@ -179,7 +176,6 @@ app.post('/api/contacto', async (req, res) => {
   }
 });
 
-// Endpoint: Obtener reseñas aprobadas
 app.get('/api/resenas', async (_req, res) => {
   try {
     const url = `${process.env.SUPABASE_URL}/rest/v1/resenas?estado=eq.aprobada&select=nombre,comentario,puntuacion,created_at&order=created_at.desc`;
@@ -203,7 +199,6 @@ app.get('/api/resenas', async (_req, res) => {
   }
 });
 
-// Endpoint: Registrar nueva reseña con Moderación Automatizada por IA
 app.post('/api/resenas', async (req, res) => {
   const nombre = String(req.body.nombre || '').trim();
   const comentario = String(req.body.comentario || '').trim();
@@ -223,7 +218,6 @@ app.post('/api/resenas', async (req, res) => {
   }
 
   try {
-    // La IA de Gemini analiza el comentario en tiempo real
     const esAprobadoPorIa = await moderarConIa(comentario);
     const estadoFinal = esAprobadoPorIa ? 'aprobada' : 'pendiente';
 
@@ -253,7 +247,6 @@ app.post('/api/resenas', async (req, res) => {
   }
 });
 
-// Iniciar servidor
 app.listen(PORT, () => {
   console.log(`🌐 Servidor corriendo en el puerto ${PORT}`);
 });
