@@ -4,3 +4,21 @@
 
 @source "../index.html";
 @source "../script.js";
+
+/* Descripción: Estilo personalizado y sutil para la barra de scroll de reseñas */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3); /* Slate-400 con transparencia */
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(56, 189, 248, 0.6); /* Sky-400 al pasar el cursor */
+}
