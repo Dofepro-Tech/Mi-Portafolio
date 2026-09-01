@@ -262,6 +262,13 @@ function inicializarResenas() {
 
   if (!form || !lista || !promedio || !total || !estado) return;
 
+  const limitarListaResenas = () => {
+    const cuartaResena = lista.querySelectorAll('article')[3];
+    lista.style.maxHeight = cuartaResena
+      ? `${cuartaResena.offsetTop + cuartaResena.offsetHeight}px`
+      : 'none';
+  };
+
   const actualizarEstadoApi = (disponible) => {
     if (boton) {
       boton.disabled = !disponible;
@@ -317,6 +324,8 @@ function inicializarResenas() {
         articulo.append(titulo, comentario);
         lista.append(articulo);
       });
+
+      requestAnimationFrame(limitarListaResenas);
     } catch (_) {
       actualizarEstadoApi(false);
       lista.textContent = 'Las reseñas estarán disponibles pronto.';
@@ -378,6 +387,7 @@ function inicializarResenas() {
   });
 
   cargar();
+  window.addEventListener('resize', limitarListaResenas);
   window.setInterval(cargar, 30000);
 }
 

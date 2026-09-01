@@ -5,7 +5,11 @@
   color-scheme: dark;
 }
 
-/* Descripción: Estilo personalizado y sutil para la barra de scroll de reseñas */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.5) transparent;
+}
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 5px;
 }
