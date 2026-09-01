@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
-@source "../index.html";
-@source "../script.js";
+.dark,
+.dark * {
+  color-scheme: dark;
+}
 
 /* Descripción: Estilo personalizado y sutil para la barra de scroll de reseñas */
 .custom-scrollbar::-webkit-scrollbar {
