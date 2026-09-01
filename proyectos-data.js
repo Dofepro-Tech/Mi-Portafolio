@@ -53,7 +53,7 @@ window.misProyectos = [
     icono: '🖼️',
     imagen: './assets/proyectos/cambiar-imagen.png?v=c434abd',
     tags: ['React', 'Vite', 'Cloudflare Workers'],
-    demoUrl: 'https://cambiar-imagen.dofepro-do.workers.dev/',
+    demoUrl: 'https://dofepro-tech.github.io/cambiar-imagen/',
     destacado: false
   }
 ];
