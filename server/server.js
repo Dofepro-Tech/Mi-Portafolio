@@ -42,18 +42,18 @@ async function fetchConTimeout(url, opciones = {}, timeoutMs = 10000) {
  * @param {string} comentario 
  * @returns {Promise<boolean>}
  */
+// Función para moderar comentarios con la API de Gemini
 async function moderarConIa(comentario) {
   try {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      console.warn('⚠️ GEMINI_API_KEY no definida. Reseña asignada a pendiente.');
-      return false; 
+      console.warn('⚠️ GEMINI_API_KEY no configurada. Asignando estado a pendiente.');
+      return false;
     }
 
-    const prompt = `Analiza la siguiente reseña para un sitio web de desarrollo. Responde ÚNICAMENTE con la palabra "APROBADO" si el texto es respetuoso, una opinión válida o constructiva. Responde ÚNICAMENTE "RECHAZADO" si contiene insultos, groserías, spam, contenido de odio o carece por completo de sentido.
+    const prompt = `Analiza la siguiente reseña. Responde ÚNICAMENTE con la palabra "aprobada" si es respetuosa y constructiva, o "rechazada" si contiene insultos o spam.
     Reseña: "${comentario}"`;
 
-    // Se utiliza el endpoint estático de la API de Gemini
     const urlApi = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
     const respuesta = await fetchConTimeout(urlApi, {
@@ -65,13 +65,15 @@ async function moderarConIa(comentario) {
     }, 5000);
 
     if (!respuesta.ok) return false;
-    const data = await respuesta.json();
-    const resultado = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim().toUpperCase();
 
-    return resultado === 'APROBADO';
+    const data = await respuesta.json();
+    // Convertimos la respuesta a minúsculas y limpiamos espacios
+    const resultado = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim().toLowerCase();
+
+    return resultado === 'aprobada';
   } catch (error) {
     console.error('⚠️ Fallo en moderación con IA:', error.message);
-    return false; // Si falla la petición a la IA, la reseña se guarda como pendiente de forma segura
+    return false; // Ante cualquier falla o timeout, la reseña pasa a revisión manual
   }
 }
 
