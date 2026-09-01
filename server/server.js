@@ -47,33 +47,41 @@ async function moderarConIa(comentario) {
   try {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      console.warn('⚠️ GEMINI_API_KEY no configurada. Asignando estado a pendiente.');
+      console.warn('⚠️ GEMINI_API_KEY no encontrada en process.env');
       return false;
     }
 
     const prompt = `Analiza la siguiente reseña. Responde ÚNICAMENTE con la palabra "aprobada" si es respetuosa y constructiva, o "rechazada" si contiene insultos o spam.
     Reseña: "${comentario}"`;
 
+    // Usamos v1beta con el modelo gemini-1.5-flash
     const urlApi = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
+    // Aumentamos el timeout a 8 segundos para evitar falsos pendientes por lentitud de red
     const respuesta = await fetchConTimeout(urlApi, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }]
       })
-    }, 5000);
+    }, 8000);
 
-    if (!respuesta.ok) return false;
+    if (!respuesta.ok) {
+      const errorText = await respuesta.text();
+      console.error('⚠️ Error API Gemini:', respuesta.status, errorText);
+      return false;
+    }
 
     const data = await respuesta.json();
-    // Convertimos la respuesta a minúsculas y limpiamos espacios
-    const resultado = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim().toLowerCase();
+    const textoRespuesta = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    const resultado = textoRespuesta.trim().toLowerCase();
 
-    return resultado === 'aprobada';
+    console.log(`🤖 Respuesta de Gemini para "${comentario}":`, resultado);
+
+    return resultado.includes('aprobada');
   } catch (error) {
     console.error('⚠️ Fallo en moderación con IA:', error.message);
-    return false; // Ante cualquier falla o timeout, la reseña pasa a revisión manual
+    return false;
   }
 }
 
