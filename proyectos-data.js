@@ -42,7 +42,7 @@ window.misProyectos = [
     icono: '📖',
     imagen: './assets/proyectos/biblia-dj.png?v=c434abd',
     tags: ['React', 'TypeScript', 'Capacitor'],
-    demoUrl: 'https://dofepro-tech.github.io/biblia-dj/',
+    demoUrl: 'https://dofepro-tech.github.io/?desde=portafolio',
     destacado: true
   },
   {
