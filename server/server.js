@@ -54,10 +54,9 @@ async function moderarConIa(comentario) {
     const prompt = `Analiza la siguiente reseña. Responde ÚNICAMENTE con la palabra "aprobada" si es respetuosa y constructiva, o "rechazada" si contiene insultos o spam.
     Reseña: "${comentario}"`;
 
-    // Usamos v1beta con el modelo gemini-1.5-flash
-    const urlApi = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    // Endpoint apuntando a gemini-3.5-flash
+    const urlApi = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`;
 
-    // Aumentamos el timeout a 8 segundos para evitar falsos pendientes por lentitud de red
     const respuesta = await fetchConTimeout(urlApi, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
