@@ -55,5 +55,34 @@ window.misProyectos = [
     tags: ['React', 'Vite', 'Cloudflare Workers'],
     demoUrl: 'https://dofepro-tech.github.io/cambiar-imagen/',
     destacado: false
+  },
+  {
+    id: 'decoelectric',
+    titulo: 'Decoelectric',
+    categoria: 'web',
+    descripcion: 'Plataforma web para servicios eléctricos y paneles decorativos de PVC, con calculadora de presupuestos, galería de proyectos y asistente técnico con IA.',
+    icono: '⚡',
+    tags: ['React', 'TypeScript', 'Tailwind CSS', 'Firebase'],
+    demoUrl: 'https://decoelectri.vercel.app/',
+    destacado: true
+  },
+  {
+    id: 'presta-do',
+    titulo: 'Presta-Do',
+    categoria: 'app',
+    descripcion: 'Sistema de gestión de préstamos multi-cartera con aplicación Android y portal web para administrar clientes, cuotas, abonos y recibos.',
+    icono: '💰',
+    tags: ['Kotlin', 'Jetpack Compose', 'Firebase', 'HTML5'],
+    demoUrl: 'https://prestado-8ae99.web.app/',
+    destacado: true
+  },
+  {
+    id: 'multi-inventario',
+    titulo: 'Multi-Inventario',
+    categoria: 'app',
+    descripcion: 'Plataforma cloud multiempresa y multialmacén para controlar existencias, movimientos, alertas de stock mínimo y exportar respaldos a Excel.',
+    icono: '📦',
+    tags: ['Android', 'Kotlin', 'Firebase', 'Excel'],
+    destacado: true
   }
 ];

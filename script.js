@@ -89,9 +89,9 @@ function renderizarProyectos(lista) {
         </div>
 
         <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex justify-between items-center">
-          <a href="${p.demoUrl}" aria-label="Ver demo del proyecto ${p.titulo}" class="text-sky-600 dark:text-sky-400 hover:text-sky-500 dark:hover:text-sky-300 text-sm font-bold flex items-center gap-1 group-hover:translate-x-1.5 transition-transform">
-            Ver Proyecto ↗
-          </a>
+          ${p.demoUrl
+            ? `<a href="${p.demoUrl}" aria-label="Ver demo del proyecto ${p.titulo}" class="text-sky-600 dark:text-sky-400 hover:text-sky-500 dark:hover:text-sky-300 text-sm font-bold flex items-center gap-1 group-hover:translate-x-1.5 transition-transform">Ver Proyecto ↗</a>`
+            : '<span class="text-slate-500 dark:text-slate-400 text-sm font-semibold">Demo privada</span>'}
         </div>
       </div>
     `;
