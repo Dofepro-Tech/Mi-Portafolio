@@ -477,6 +477,36 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+// COLAPSABLE "SOBRE MÍ"
+function inicializarSobreMiColapsable() {
+  const toggle = document.getElementById('sobreMiToggle');
+  const content = document.getElementById('sobreMiContent');
+  const contentExtra = document.getElementById('sobreMiContentExtra');
+  const icon = document.getElementById('sobreMiIcon');
+
+  if (!toggle || !content || !contentExtra || !icon) return;
+
+  let isExpanded = false;
+
+  toggle.addEventListener('click', () => {
+    isExpanded = !isExpanded;
+
+    if (isExpanded) {
+      content.style.maxHeight = content.scrollHeight + 'px';
+      content.style.opacity = '1';
+      contentExtra.style.maxHeight = contentExtra.scrollHeight + 'px';
+      contentExtra.style.opacity = '1';
+      icon.style.transform = 'rotate(180deg)';
+    } else {
+      content.style.maxHeight = '0';
+      content.style.opacity = '0';
+      contentExtra.style.maxHeight = '0';
+      contentExtra.style.opacity = '0';
+      icon.style.transform = 'rotate(0deg)';
+    }
+  });
+}
+
 // INICIALIZACIÓN GENERAL
 document.addEventListener('DOMContentLoaded', () => {
   inicializarTema();
@@ -488,4 +518,5 @@ document.addEventListener('DOMContentLoaded', () => {
   inicializarFormularioContacto();
   inicializarResenas();
   inicializarMenuMovil();
+  inicializarSobreMiColapsable();
 });
