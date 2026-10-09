@@ -9,41 +9,104 @@ const API_URL = 'https://dofepro-backend.onrender.com';
 // 1. GESTIÓN DEL MODO CLARO / OSCURO
 function inicializarTema() {
   const btnTheme = document.getElementById('themeToggle');
-  const iconSun = document.getElementById('themeSun');
-  const iconMoon = document.getElementById('themeMoon');
 
   if (!btnTheme) return;
-
-  const aplicarIconos = (isDark) => {
-    btnTheme.setAttribute('aria-pressed', String(isDark));
-    if (iconSun && iconMoon) {
-      if (isDark) {
-        iconSun.classList.remove('hidden');
-        iconMoon.classList.add('hidden');
-      } else {
-        iconSun.classList.add('hidden');
-        iconMoon.classList.remove('hidden');
-      }
-    }
-  };
 
   const themeGuardado = localStorage.getItem('theme');
   const esOscuro = themeGuardado === 'dark' || (!themeGuardado && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
   if (esOscuro) {
     document.documentElement.classList.add('dark');
-    aplicarIconos(true);
   } else {
     document.documentElement.classList.remove('dark');
-    aplicarIconos(false);
   }
 
   btnTheme.addEventListener('click', (e) => {
     e.preventDefault();
-    const isDark = document.documentElement.classList.toggle('dark');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    aplicarIconos(isDark);
+    toggleTemasModal();
   });
+}
+
+// GESTIÓN DEL MODAL DE TEMAS
+function toggleTemasModal() {
+  const modal = document.getElementById('modalTemas');
+  const content = document.getElementById('modalTemasContent');
+  if (!modal || !content) return;
+
+  if (!modal.open) {
+    modal.showModal();
+    requestAnimationFrame(() => {
+      content.classList.remove('scale-95', 'opacity-0');
+      content.classList.add('scale-100', 'opacity-100');
+    });
+    document.body.style.overflow = 'hidden';
+  } else {
+    content.classList.remove('scale-100', 'opacity-100');
+    content.classList.add('scale-95', 'opacity-0');
+
+    setTimeout(() => {
+      modal.close();
+      document.body.style.overflow = '';
+    }, 150);
+  }
+}
+
+// GESTIÓN DE LOS BOTONES CLARO/OSCURO EN EL MODAL
+function inicializarModoTemaModal() {
+  const modoClaroBtn = document.getElementById('modoClaroBtn');
+  const modoOscuroBtn = document.getElementById('modoOscuroBtn');
+  const temasClaro = document.getElementById('temasClaro');
+  const temasOscuro = document.getElementById('temasOscuro');
+
+  if (!modoClaroBtn || !modoOscuroBtn || !temasClaro || !temasOscuro) return;
+
+  const actualizarBotones = (isDark) => {
+    if (isDark) {
+      modoOscuroBtn.className = 'px-4 py-2 rounded-xl font-bold text-sm transition-all bg-sky-500 text-slate-950';
+      modoClaroBtn.className = 'px-4 py-2 rounded-xl font-bold text-sm transition-all bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300';
+      temasOscuro.classList.remove('hidden');
+      temasClaro.classList.add('hidden');
+    } else {
+      modoClaroBtn.className = 'px-4 py-2 rounded-xl font-bold text-sm transition-all bg-sky-500 text-slate-950';
+      modoOscuroBtn.className = 'px-4 py-2 rounded-xl font-bold text-sm transition-all bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300';
+      temasClaro.classList.remove('hidden');
+      temasOscuro.classList.add('hidden');
+    }
+  };
+
+  modoClaroBtn.addEventListener('click', () => {
+    document.documentElement.classList.remove('dark');
+    localStorage.setItem('theme', 'light');
+    actualizarBotones(false);
+  });
+
+  modoOscuroBtn.addEventListener('click', () => {
+    document.documentElement.classList.add('dark');
+    localStorage.setItem('theme', 'dark');
+    actualizarBotones(true);
+  });
+
+  // Inicializar según el tema actual
+  const esOscuro = document.documentElement.classList.contains('dark');
+  actualizarBotones(esOscuro);
+}
+
+// APLICAR TEMA ESPECÍFICO
+function aplicarTema(modo, tema) {
+  localStorage.setItem('theme', modo === 'oscuro' ? 'dark' : 'light');
+  localStorage.setItem('themeVariant', tema);
+
+  if (modo === 'oscuro') {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+
+  // Cerrar modal
+  toggleTemasModal();
+
+  // Aquí podrías agregar lógica para aplicar colores específicos según el tema
+  console.log(`Tema aplicado: ${modo} - ${tema}`);
 }
 
 // ACTUALIZAR CONTADOR DE PROYECTOS
@@ -469,11 +532,21 @@ document.getElementById('modalContacto')?.addEventListener('click', (e) => {
   }
 });
 
+document.getElementById('modalTemas')?.addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) {
+    toggleTemasModal();
+  }
+});
+
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' || e.key === 'Esc') {
-    const modal = document.getElementById('modalContacto');
-    if (modal && modal.open) {
+    const modalContacto = document.getElementById('modalContacto');
+    const modalTemas = document.getElementById('modalTemas');
+    if (modalContacto && modalContacto.open) {
       toggleContactoModal();
+    }
+    if (modalTemas && modalTemas.open) {
+      toggleTemasModal();
     }
   }
 });
@@ -511,6 +584,7 @@ function inicializarSobreMiColapsable() {
 // INICIALIZACIÓN GENERAL
 document.addEventListener('DOMContentLoaded', () => {
   inicializarTema();
+  inicializarModoTemaModal();
   renderizarProyectos(misProyectos);
   actualizarContadorProyectos();
   inicializarFiltros();

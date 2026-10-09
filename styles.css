@@ -255,7 +255,8 @@
 }
 
 /* Fuerza al modal a ignorar otros contextos de apilamiento */
-#modalContacto {
+#modalContacto,
+#modalTemas {
   position: fixed !important;
   z-index: 2147483647 !important; /* Valor máximo de z-index posible */
 }
