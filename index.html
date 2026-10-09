@@ -177,9 +177,9 @@
 </h1>
     
     <div class="text-slate-600 dark:text-slate-400 text-sm sm:text-base md:text-lg mt-4 sm:mt-6 max-w-2xl mx-auto leading-relaxed">
-      <h2 id="sobreMiToggle" class="font-bold text-2xl sm:text-3xl md:text-4xl text-slate-800 dark:text-slate-200 mb-2 cursor-pointer hover:text-sky-500 dark:hover:text-sky-400 transition-colors flex items-center justify-center gap-2">
-        Sobre mí
-        <span id="sobreMiIcon" class="text-lg transform transition-transform duration-300">▼</span>
+      <h2 id="sobreMiToggle" class="font-bold text-2xl sm:text-3xl md:text-4xl mb-2 cursor-pointer flex items-center justify-center gap-2">
+        <span class="bg-gradient-to-r from-sky-400 via-indigo-500 to-emerald-400 bg-clip-text text-transparent animate-gradient-text bg-[length:200%_auto]">Sobre mí</span>
+        <span id="sobreMiIcon" class="text-lg transform transition-transform duration-300 text-slate-800 dark:text-slate-200">▼</span>
       </h2>
       <div id="sobreMiContent" class="overflow-hidden transition-all duration-500 ease-in-out" style="max-height: 0; opacity: 0;">
         <p class="pb-4">Hola, soy Domingo Feliz (@dofepro), desarrollador web enfocado en la creación de aplicaciones funcionales, interactivas y totalmente centradas en la experiencia del usuario.
@@ -412,6 +412,10 @@
   <div>
     <label for="nombreResena" class="block text-sm font-bold text-slate-800 dark:text-slate-200">Tu nombre</label>
     <input id="nombreResena" name="nombre" required maxlength="80" class="mt-1.5 w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-sky-500 dark:border-slate-700 dark:bg-slate-950 dark:text-white" placeholder="Ej. María R.">
+  </div>
+  <div>
+    <label for="emailResena" class="block text-sm font-bold text-slate-800 dark:text-slate-200">Tu correo</label>
+    <input id="emailResena" name="email" type="email" required maxlength="100" class="mt-1.5 w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-sky-500 dark:border-slate-700 dark:bg-slate-950 dark:text-white" placeholder="Ej. maria@ejemplo.com">
   </div>
   <fieldset>
     <legend class="text-sm font-bold text-slate-800 dark:text-slate-200">Tu valoración</legend>

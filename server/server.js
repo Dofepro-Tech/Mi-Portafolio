@@ -210,13 +210,15 @@ app.get('/api/resenas', async (_req, res) => {
 
 app.post('/api/resenas', async (req, res) => {
   const nombre = String(req.body.nombre || '').trim();
+  const email = String(req.body.email || '').trim();
   const comentario = String(req.body.comentario || '').trim();
   const puntuacionEntrante = req.body.puntuacion !== undefined ? req.body.puntuacion : req.body.valoracion;
   const puntuacion = Number(puntuacionEntrante);
 
   if (
-    nombre.length < 2 || nombre.length > 80 || 
-    comentario.length < 10 || comentario.length > 600 || 
+    nombre.length < 2 || nombre.length > 80 ||
+    !emailValido.test(email) || email.length > 254 ||
+    comentario.length < 10 || comentario.length > 600 ||
     !Number.isInteger(puntuacion) || puntuacion < 1 || puntuacion > 5
   ) {
     return res.status(400).json({ exito: false, error: 'Datos de reseña no válidos.' });
@@ -230,24 +232,24 @@ app.post('/api/resenas', async (req, res) => {
     const esAprobadoPorIa = await moderarConIa(comentario);
     const estadoFinal = esAprobadoPorIa ? 'aprobada' : 'pendiente';
 
-    const respuesta = await fetchConTimeout(`${process.env.SUPABASE_URL}/rest/v1/resenas`, { 
-      method: 'POST', 
-      headers: { 
-        'Content-Type': 'application/json', 
-        'apikey': process.env.SUPABASE_KEY, 
-        'Authorization': `Bearer ${process.env.SUPABASE_KEY}`, 
-        'Prefer': 'return=minimal' 
-      }, 
-      body: JSON.stringify({ nombre, comentario, puntuacion, estado: estadoFinal }) 
+    const respuesta = await fetchConTimeout(`${process.env.SUPABASE_URL}/rest/v1/resenas`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': process.env.SUPABASE_KEY,
+        'Authorization': `Bearer ${process.env.SUPABASE_KEY}`,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ nombre, email, comentario, puntuacion, estado: estadoFinal })
     });
 
     if (!respuesta.ok) throw new Error(await respuesta.text());
-    
-    res.status(201).json({ 
-      exito: true, 
-      mensaje: esAprobadoPorIa 
-        ? '¡Gracias! Tu reseña ha sido publicada.' 
-        : '¡Gracias! Tu reseña se publicará después de ser revisada.' 
+
+    res.status(201).json({
+      exito: true,
+      mensaje: esAprobadoPorIa
+        ? '¡Gracias! Tu reseña ha sido publicada.'
+        : '¡Gracias! Tu reseña se publicará después de ser revisada.'
     });
 
   } catch (error) {

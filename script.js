@@ -348,6 +348,7 @@ function inicializarResenas() {
     const formData = new FormData(form);
     const payload = {
       nombre: String(formData.get('nombre') || '').trim(),
+      email: String(formData.get('email') || '').trim(),
       comentario: String(formData.get('comentario') || '').trim(),
       puntuacion: parseInt(formData.get('puntuacion') || 5, 10)
     };
