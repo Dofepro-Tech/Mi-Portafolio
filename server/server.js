@@ -87,10 +87,13 @@ async function moderarConIa(comentario) {
 const origenesPermitidos = [
   'http://127.0.0.1:5500',
   'http://localhost:3000',
+  'http://127.0.0.1:8080',
+  'http://localhost:8080',
+  'http://127.0.0.1:*',
+  'http://localhost:*',
   'https://dofepro-tech.github.io',
   'https://dofepro.do',
-  'https://www.dofepro.do',
-  'http://localhost:8080'
+  'https://www.dofepro.do'
 ];
 
 app.use(cors({
