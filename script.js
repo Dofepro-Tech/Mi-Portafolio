@@ -120,8 +120,13 @@ function actualizarContadorProyectos() {
 // RENDERIZADO DE TARJETAS DE PROYECTOS
 function renderizarProyectos(lista) {
   const grid = document.getElementById('gridProyectos');
-  
-  if (!grid) return;
+
+  console.log('renderizarProyectos llamado con:', lista.length, 'proyectos');
+
+  if (!grid) {
+    console.error('No se encontró el elemento gridProyectos');
+    return;
+  }
   grid.innerHTML = '';
 
   if (lista.length === 0) {
@@ -132,7 +137,7 @@ function renderizarProyectos(lista) {
   lista.forEach(p => {
     const card = document.createElement('article');
     card.className = "glow-card-container group";
-    
+
     card.innerHTML = `
       <div class="glow-card-content bg-white dark:bg-slate-900 p-6 flex flex-col justify-between transition-colors shadow-lg dark:shadow-none rounded-2xl border border-slate-200 dark:border-slate-800 h-full">
         <div>
@@ -145,7 +150,7 @@ function renderizarProyectos(lista) {
           </div>
           <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-sky-500 dark:group-hover:text-sky-400 transition-colors">${p.titulo}</h3>
           <p class="text-slate-600 dark:text-slate-400 text-sm mt-2 leading-relaxed">${p.descripcion}</p>
-          
+
           <div class="flex flex-wrap gap-1.5 mt-5">
             ${p.tags.map(tag => `<span class="bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-[11px] font-mono px-2.5 py-0.5 rounded-md">${tag}</span>`).join('')}
           </div>
@@ -160,6 +165,8 @@ function renderizarProyectos(lista) {
     `;
     grid.appendChild(card);
   });
+
+  console.log('Proyectos renderizados:', grid.children.length);
 }
 
 // BOTONES DE FILTRO DE PROYECTOS

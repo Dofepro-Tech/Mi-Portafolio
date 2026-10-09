@@ -89,7 +89,8 @@ const origenesPermitidos = [
   'http://localhost:3000',
   'https://dofepro-tech.github.io',
   'https://dofepro.do',
-  'https://www.dofepro.do'
+  'https://www.dofepro.do',
+  'http://localhost:8080'
 ];
 
 app.use(cors({
