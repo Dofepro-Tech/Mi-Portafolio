@@ -219,22 +219,28 @@ app.post('/api/resenas', async (req, res) => {
   const puntuacionEntrante = req.body.puntuacion !== undefined ? req.body.puntuacion : req.body.valoracion;
   const puntuacion = Number(puntuacionEntrante);
 
+  console.log('Datos de reseña recibidos:', { nombre, email, comentario, puntuacion });
+
   if (
     nombre.length < 2 || nombre.length > 80 ||
     !emailValido.test(email) || email.length > 254 ||
     comentario.length < 10 || comentario.length > 600 ||
     !Number.isInteger(puntuacion) || puntuacion < 1 || puntuacion > 5
   ) {
+    console.log('Validación fallida');
     return res.status(400).json({ exito: false, error: 'Datos de reseña no válidos.' });
   }
 
   if (!permitirSolicitud(req.ip, 3)) {
+    console.log('Límite de solicitudes excedido');
     return res.status(429).json({ exito: false, error: 'Intenta nuevamente más tarde.' });
   }
 
   try {
     const esAprobadoPorIa = await moderarConIa(comentario);
     const estadoFinal = esAprobadoPorIa ? 'aprobada' : 'pendiente';
+
+    console.log('Estado de moderación:', estadoFinal);
 
     const respuesta = await fetchConTimeout(`${process.env.SUPABASE_URL}/rest/v1/resenas`, {
       method: 'POST',
@@ -247,7 +253,13 @@ app.post('/api/resenas', async (req, res) => {
       body: JSON.stringify({ nombre, email, comentario, puntuacion, estado: estadoFinal })
     });
 
-    if (!respuesta.ok) throw new Error(await respuesta.text());
+    if (!respuesta.ok) {
+      const errorText = await respuesta.text();
+      console.error('Error Supabase:', respuesta.status, errorText);
+      throw new Error(`Error Supabase: ${errorText}`);
+    }
+
+    console.log('Reseña guardada exitosamente');
 
     res.status(201).json({
       exito: true,

@@ -15,6 +15,8 @@ function inicializarTema() {
   const themeGuardado = localStorage.getItem('theme');
   const esOscuro = themeGuardado === 'dark' || (!themeGuardado && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
+  console.log('Tema guardado:', themeGuardado, 'Es oscuro:', esOscuro);
+
   if (esOscuro) {
     document.documentElement.classList.add('dark');
   } else {
@@ -93,6 +95,8 @@ function inicializarModoTemaModal() {
 
 // APLICAR TEMA ESPECÍFICO
 function aplicarTema(modo, tema) {
+  console.log('Aplicando tema:', modo, tema);
+
   localStorage.setItem('theme', modo === 'oscuro' ? 'dark' : 'light');
   localStorage.setItem('themeVariant', tema);
 
@@ -102,10 +106,29 @@ function aplicarTema(modo, tema) {
     document.documentElement.classList.remove('dark');
   }
 
+  // Actualizar botones del modal
+  const modoClaroBtn = document.getElementById('modoClaroBtn');
+  const modoOscuroBtn = document.getElementById('modoOscuroBtn');
+  const temasClaro = document.getElementById('temasClaro');
+  const temasOscuro = document.getElementById('temasOscuro');
+
+  if (modoClaroBtn && modoOscuroBtn && temasClaro && temasOscuro) {
+    if (modo === 'oscuro') {
+      modoOscuroBtn.className = 'px-4 py-2 rounded-xl font-bold text-sm transition-all bg-sky-500 text-slate-950';
+      modoClaroBtn.className = 'px-4 py-2 rounded-xl font-bold text-sm transition-all bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300';
+      temasOscuro.classList.remove('hidden');
+      temasClaro.classList.add('hidden');
+    } else {
+      modoClaroBtn.className = 'px-4 py-2 rounded-xl font-bold text-sm transition-all bg-sky-500 text-slate-950';
+      modoOscuroBtn.className = 'px-4 py-2 rounded-xl font-bold text-sm transition-all bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300';
+      temasClaro.classList.remove('hidden');
+      temasOscuro.classList.add('hidden');
+    }
+  }
+
   // Cerrar modal
   toggleTemasModal();
 
-  // Aquí podrías agregar lógica para aplicar colores específicos según el tema
   console.log(`Tema aplicado: ${modo} - ${tema}`);
 }
 
