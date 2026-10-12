@@ -285,3 +285,140 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* ==========================================================================
+   TEMAS PREMIUM - VARIANTES DE COLOR
+   ========================================================================== */
+
+/* Temas Claros */
+.theme-ocean {
+  --color-primary: #0ea5e9;
+  --color-primary-dark: #0284c7;
+}
+
+.theme-forest {
+  --color-primary: #10b981;
+  --color-primary-dark: #059669;
+}
+
+.theme-sunset {
+  --color-primary: #f97316;
+  --color-primary-dark: #ea580c;
+}
+
+.theme-lavender {
+  --color-primary: #8b5cf6;
+  --color-primary-dark: #7c3aed;
+}
+
+.theme-rose {
+  --color-primary: #f43f5e;
+  --color-primary-dark: #e11d48;
+}
+
+.theme-sage {
+  --color-primary: #14b8a6;
+  --color-primary-dark: #0d9488;
+}
+
+.theme-peach {
+  --color-primary: #f59e0b;
+  --color-primary-dark: #d97706;
+}
+
+.theme-slate {
+  --color-primary: #64748b;
+  --color-primary-dark: #475569;
+}
+
+.theme-mint {
+  --color-primary: #84cc16;
+  --color-primary-dark: #65a30d;
+}
+
+/* Temas Oscuros */
+.theme-midnight {
+  --color-primary: #3b82f6;
+  --color-primary-dark: #2563eb;
+}
+
+.theme-forest-dark {
+  --color-primary: #059669;
+  --color-primary-dark: #047857;
+}
+
+.theme-vampire {
+  --color-primary: #dc2626;
+  --color-primary-dark: #b91c1c;
+}
+
+.theme-galaxy {
+  --color-primary: #a855f7;
+  --color-primary-dark: #9333ea;
+}
+
+.theme-cyber {
+  --color-primary: #06b6d4;
+  --color-primary-dark: #0891b2;
+}
+
+.theme-obsidian {
+  --color-primary: #6b7280;
+  --color-primary-dark: #4b5563;
+}
+
+.theme-aurora {
+  --color-primary: #6366f1;
+  --color-primary-dark: #4f46e5;
+}
+
+.theme-emerald-dark {
+  --color-primary: #059669;
+  --color-primary-dark: #047857;
+}
+
+.theme-ruby {
+  --color-primary: #e11d48;
+  --color-primary-dark: #be123c;
+}
+
+/* Aplicar variables CSS */
+:root {
+  --color-primary: #0ea5e9;
+  --color-primary-dark: #0284c7;
+}
+
+/* Sobrescribir colores específicos con las variables */
+.bg-sky-500,
+.bg-sky-400,
+.bg-sky-500\/10,
+.bg-sky-500\/20 {
+  background-color: var(--color-primary) !important;
+}
+
+.text-sky-500,
+.text-sky-400,
+.text-sky-600 {
+  color: var(--color-primary) !important;
+}
+
+.hover\:text-sky-500:hover,
+.hover\:text-sky-400:hover {
+  color: var(--color-primary) !important;
+}
+
+.border-sky-500,
+.border-sky-500\/20,
+.border-sky-500\/30,
+.border-sky-500\/40 {
+  border-color: var(--color-primary) !important;
+}
+
+.focus\:border-sky-500:focus {
+  border-color: var(--color-primary) !important;
+}
+
+.shadow-sky-500\/20,
+.shadow-sky-500\/26 {
+  box-shadow: 0 10px 24px rgba(var(--color-primary), 0.26) !important;
+}
