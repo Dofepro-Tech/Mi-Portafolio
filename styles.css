@@ -290,105 +290,228 @@
    TEMAS PREMIUM - VARIANTES DE COLOR
    ========================================================================== */
 
-/* Temas Claros */
+/* Temas Claros - Fondo claro, texto oscuro */
 .theme-ocean {
   --color-primary: #0ea5e9;
   --color-primary-dark: #0284c7;
+  --color-bg: #f0f9ff;
+  --color-bg-card: #ffffff;
+  --color-text: #0f172a;
+  --color-text-muted: #64748b;
 }
 
 .theme-forest {
   --color-primary: #10b981;
   --color-primary-dark: #059669;
+  --color-bg: #f0fdf4;
+  --color-bg-card: #ffffff;
+  --color-text: #0f172a;
+  --color-text-muted: #64748b;
 }
 
 .theme-sunset {
   --color-primary: #f97316;
   --color-primary-dark: #ea580c;
+  --color-bg: #fff7ed;
+  --color-bg-card: #ffffff;
+  --color-text: #0f172a;
+  --color-text-muted: #64748b;
 }
 
 .theme-lavender {
   --color-primary: #8b5cf6;
   --color-primary-dark: #7c3aed;
+  --color-bg: #faf5ff;
+  --color-bg-card: #ffffff;
+  --color-text: #0f172a;
+  --color-text-muted: #64748b;
 }
 
 .theme-rose {
   --color-primary: #f43f5e;
   --color-primary-dark: #e11d48;
+  --color-bg: #fff1f2;
+  --color-bg-card: #ffffff;
+  --color-text: #0f172a;
+  --color-text-muted: #64748b;
 }
 
 .theme-sage {
   --color-primary: #14b8a6;
   --color-primary-dark: #0d9488;
+  --color-bg: #f0fdfa;
+  --color-bg-card: #ffffff;
+  --color-text: #0f172a;
+  --color-text-muted: #64748b;
 }
 
 .theme-peach {
   --color-primary: #f59e0b;
   --color-primary-dark: #d97706;
+  --color-bg: #fffbeb;
+  --color-bg-card: #ffffff;
+  --color-text: #0f172a;
+  --color-text-muted: #64748b;
 }
 
 .theme-slate {
   --color-primary: #64748b;
   --color-primary-dark: #475569;
+  --color-bg: #f8fafc;
+  --color-bg-card: #ffffff;
+  --color-text: #0f172a;
+  --color-text-muted: #64748b;
 }
 
 .theme-mint {
   --color-primary: #84cc16;
   --color-primary-dark: #65a30d;
+  --color-bg: #f7fee7;
+  --color-bg-card: #ffffff;
+  --color-text: #0f172a;
+  --color-text-muted: #64748b;
 }
 
-/* Temas Oscuros */
+/* Temas Oscuros - Fondo oscuro, texto claro */
 .theme-midnight {
   --color-primary: #3b82f6;
   --color-primary-dark: #2563eb;
+  --color-bg: #0c1929;
+  --color-bg-card: #1e293b;
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
 }
 
 .theme-forest-dark {
   --color-primary: #059669;
   --color-primary-dark: #047857;
+  --color-bg: #052e16;
+  --color-bg-card: #14532d;
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
 }
 
 .theme-vampire {
   --color-primary: #dc2626;
   --color-primary-dark: #b91c1c;
+  --color-bg: #2a0a0a;
+  --color-bg-card: #450a0a;
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
 }
 
 .theme-galaxy {
   --color-primary: #a855f7;
   --color-primary-dark: #9333ea;
+  --color-bg: #1e1b4b;
+  --color-bg-card: #312e81;
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
 }
 
 .theme-cyber {
   --color-primary: #06b6d4;
   --color-primary-dark: #0891b2;
+  --color-bg: #083344;
+  --color-bg-card: #164e63;
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
 }
 
 .theme-obsidian {
   --color-primary: #6b7280;
   --color-primary-dark: #4b5563;
+  --color-bg: #0f172a;
+  --color-bg-card: #1e293b;
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
 }
 
 .theme-aurora {
   --color-primary: #6366f1;
   --color-primary-dark: #4f46e5;
+  --color-bg: #1e1b4b;
+  --color-bg-card: #312e81;
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
 }
 
 .theme-emerald-dark {
   --color-primary: #059669;
   --color-primary-dark: #047857;
+  --color-bg: #022c22;
+  --color-bg-card: #064e3b;
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
 }
 
 .theme-ruby {
   --color-primary: #e11d48;
   --color-primary-dark: #be123c;
+  --color-bg: #2a0a0a;
+  --color-bg-card: #881337;
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
 }
 
-/* Aplicar variables CSS */
+/* Aplicar variables CSS por defecto */
 :root {
   --color-primary: #0ea5e9;
   --color-primary-dark: #0284c7;
+  --color-bg: #f8fafc;
+  --color-bg-card: #ffffff;
+  --color-text: #0f172a;
+  --color-text-muted: #64748b;
 }
 
-/* Sobrescribir colores específicos con las variables */
+/* Modo oscuro por defecto */
+.dark {
+  --color-bg: #020617;
+  --color-bg-card: #0f172a;
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
+}
+
+/* Aplicar variables a elementos globales */
+body {
+  background-color: var(--color-bg) !important;
+  color: var(--color-text) !important;
+}
+
+.bg-slate-50 {
+  background-color: var(--color-bg) !important;
+}
+
+.bg-white {
+  background-color: var(--color-bg-card) !important;
+}
+
+.dark .bg-slate-900 {
+  background-color: var(--color-bg-card) !important;
+}
+
+.text-slate-800,
+.text-slate-900 {
+  color: var(--color-text) !important;
+}
+
+.text-slate-600,
+.text-slate-700 {
+  color: var(--color-text-muted) !important;
+}
+
+.dark .text-slate-100,
+.dark .text-slate-200,
+.dark .text-white {
+  color: var(--color-text) !important;
+}
+
+.dark .text-slate-400,
+.dark .text-slate-300 {
+  color: var(--color-text-muted) !important;
+}
+
+/* Colores primarios */
 .bg-sky-500,
 .bg-sky-400,
 .bg-sky-500\/10,
@@ -421,4 +544,20 @@
 .shadow-sky-500\/20,
 .shadow-sky-500\/26 {
   box-shadow: 0 10px 24px rgba(var(--color-primary), 0.26) !important;
+}
+
+.bg-slate-100 {
+  background-color: var(--color-bg) !important;
+}
+
+.dark .bg-slate-800 {
+  background-color: var(--color-bg-card) !important;
+}
+
+.border-slate-200 {
+  border-color: var(--color-text-muted) !important;
+}
+
+.dark .border-slate-800 {
+  border-color: var(--color-text-muted) !important;
 }
