@@ -472,42 +472,30 @@
   --color-text-muted: #94a3b8;
 }
 
-/* Aplicar variables a elementos globales */
-body {
+/* Aplicar variables a elementos globales con alta especificidad */
+html[class*="theme-"] body,
+html[class*="theme-"] .bg-slate-50 {
   background-color: var(--color-bg) !important;
   color: var(--color-text) !important;
 }
 
-.bg-slate-50 {
-  background-color: var(--color-bg) !important;
-}
-
-.bg-white {
+html[class*="theme-"] .bg-white,
+html[class*="theme-"].dark .bg-slate-900 {
   background-color: var(--color-bg-card) !important;
 }
 
-.dark .bg-slate-900 {
-  background-color: var(--color-bg-card) !important;
-}
-
-.text-slate-800,
-.text-slate-900 {
+html[class*="theme-"] .text-slate-800,
+html[class*="theme-"] .text-slate-900,
+html[class*="theme-"].dark .text-slate-100,
+html[class*="theme-"].dark .text-slate-200,
+html[class*="theme-"].dark .text-white {
   color: var(--color-text) !important;
 }
 
-.text-slate-600,
-.text-slate-700 {
-  color: var(--color-text-muted) !important;
-}
-
-.dark .text-slate-100,
-.dark .text-slate-200,
-.dark .text-white {
-  color: var(--color-text) !important;
-}
-
-.dark .text-slate-400,
-.dark .text-slate-300 {
+html[class*="theme-"] .text-slate-600,
+html[class*="theme-"] .text-slate-700,
+html[class*="theme-"].dark .text-slate-400,
+html[class*="theme-"].dark .text-slate-300 {
   color: var(--color-text-muted) !important;
 }
 
