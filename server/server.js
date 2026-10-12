@@ -110,8 +110,13 @@ app.use(cors({
 
 app.use(express.json({ limit: '20kb' }));
 
+// Rate limiting desactivado temporalmente para desarrollo local
 const intentosPorIp = new Map();
 const permitirSolicitud = (ip, limite) => {
+  // Desactivado en desarrollo local
+  if (process.env.NODE_ENV !== 'production') {
+    return true;
+  }
   const ahora = Date.now();
   const registro = intentosPorIp.get(ip) || [];
   const recientes = registro.filter((tiempo) => ahora - tiempo < 60 * 60 * 1000);
