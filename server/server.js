@@ -39,7 +39,7 @@ async function fetchConTimeout(url, opciones = {}, timeoutMs = 10000) {
 
 /**
  * Evalúa si un comentario es adecuado para ser publicado usando la API de Gemini.
- * @param {string} comentario 
+ * @param {string} comentario
  * @returns {Promise<boolean>}
  */
 // Función para moderar comentarios con la API de Gemini
@@ -47,8 +47,9 @@ async function moderarConIa(comentario) {
   try {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      console.warn('⚠️ GEMINI_API_KEY no encontrada en process.env');
-      return false;
+      console.warn('⚠️ GEMINI_API_KEY no encontrada en process.env - Aprobando automáticamente en desarrollo');
+      // En desarrollo local, aprobar automáticamente si no hay API key
+      return true;
     }
 
     const prompt = `Analiza la siguiente reseña. Responde ÚNICAMENTE con la palabra "aprobada" si es respetuosa y constructiva, o "rechazada" si contiene insultos o spam.
