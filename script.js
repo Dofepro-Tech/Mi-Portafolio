@@ -4,7 +4,9 @@
  */
 
 const misProyectos = window.misProyectos || [];
-const API_URL = 'https://dofepro-backend.onrender.com';
+const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:5000'
+  : 'https://dofepro-backend.onrender.com';
 
 // 1. GESTIÓN DEL MODO CLARO / OSCURO
 function inicializarTema() {
