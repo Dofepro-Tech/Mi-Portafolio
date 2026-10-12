@@ -15,7 +15,8 @@
   "scripts": {
     "dev": "npx @tailwindcss/cli -i ./src/input.css -o ./dist/output.css --watch",
     "build": "npx @tailwindcss/cli -i ./src/input.css -o ./dist/output.css --minify",
-    "start": "node server/server.js"
+    "start": "node server/server.js",
+    "dev:api": "node server/server.js"
   },
   "keywords": [
     "portafolio",
