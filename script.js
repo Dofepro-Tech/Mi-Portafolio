@@ -102,10 +102,20 @@ function aplicarTema(modo, tema) {
   localStorage.setItem('theme', modo === 'oscuro' ? 'dark' : 'light');
   localStorage.setItem('themeVariant', tema);
 
+  // Eliminar cualquier clase de tema previa
+  document.documentElement.classList.remove('theme-ocean', 'theme-forest', 'theme-sunset', 'theme-lavender', 'theme-rose', 'theme-sage', 'theme-peach', 'theme-slate', 'theme-mint');
+  document.documentElement.classList.remove('theme-midnight', 'theme-forest-dark', 'theme-vampire', 'theme-galaxy', 'theme-cyber', 'theme-obsidian', 'theme-aurora', 'theme-emerald-dark', 'theme-ruby');
+
+  // Aplicar modo claro/oscuro
   if (modo === 'oscuro') {
     document.documentElement.classList.add('dark');
   } else {
     document.documentElement.classList.remove('dark');
+  }
+
+  // Aplicar variante de tema
+  if (tema !== 'default') {
+    document.documentElement.classList.add(`theme-${tema}`);
   }
 
   // Actualizar botones del modal
